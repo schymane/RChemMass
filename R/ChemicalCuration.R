@@ -397,7 +397,52 @@ getSuspectInChIKey <- function(smiles,name) {
 }
 
 
-#' Convert SMILES to an InChIKey with OpenBabel
+#' Convert SMILES to an InChIKey with OpenBabel (obabel)
+#'
+#' @description A small wrapper function to convert SMILES to an InChIKey with OpenBabel
+#' (\code{\link{http://openbabel.org/wiki/Main_Page}}). Requires pre-installation of
+#' OpenBabel. If this is not the case, use webservices instead via
+#' \code{\link{getSuspectInChIKey}}. Note this supercedes \code{\link{getSuspectInChIKey.babel}}
+#' This function uses Babel default InChI options; standard InChIKeys will be generated.
+#'
+#' @usage getInChIKey.obabel(smiles,babel_dir)
+#'
+#' @param smiles SMILES code to convert to the InChIKey.
+#' @param babel_dir Location of folder containing \code{"obabel.exe"}.
+#'
+#' @return Returns the InChIKey retrieved, or alternative output from Babel. Run
+#' \code{\link{InChIKey_test}} to determine if valid.
+#'
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#'
+#' @seealso \code{\link{getSuspectInChIKey}}, \code{\link{InChIKey_test}}, \code{\link{getSuspectInChIKey.babel}}.
+#'
+#' @export
+#'
+#' @examples
+#' babel_dir <- "C:/Program Files (x86)/OpenBabel-2.3.2"
+#' getInChIKey.obabel("c1ccccc1", babel_dir)
+#' Various failed conversions:
+#' getInChIKey.obabel("blah", babel_dir)
+#' getInChIKey.obabel("", babel_dir)
+#' InChIKey_test(getInChIKey.obabel("blah",babel_dir))
+#'
+getInChIKey.obabel <- function(smiles,babel_dir) {
+  dir <- getwd()
+  if (file.exists(babel_dir)) {
+    setwd(babel_dir)
+    Babel_out <- system("obabel -ismi -oinchikey",input=smiles,show.output.on.console = F,intern=T)
+  } else {
+    Babel_out = ""
+    warning("Incorrect Babel directory or directory does not exist")
+  }
+  setwd(dir)
+  return(Babel_out[1])
+}
+
+
+
+#' Convert SMILES to an InChIKey with OpenBabel (superceded)
 #'
 #' @description A small wrapper function to convert SMILES to an InChIKey with OpenBabel
 #' (\code{\link{http://openbabel.org/wiki/Main_Page}}). Requires pre-installation of
@@ -405,6 +450,7 @@ getSuspectInChIKey <- function(smiles,name) {
 #' \code{\link{getSuspectInChIKey}}. Note this creates \code{"temp_smiles.smi"}
 #' in the \code{temp_dir} directory and will overwrite any previous file of the same name.
 #' This function uses Babel default InChI options; standard InChIKeys will be generated.
+#' This is superceded by \code{\link{getInChIKey.obabel}}.
 #'
 #' @usage getSuspectInChIKey.babel(smiles,babel_dir,temp_dir)
 #'
@@ -417,7 +463,7 @@ getSuspectInChIKey <- function(smiles,name) {
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @seealso \code{\link{getSuspectInChIKey}}, \code{\link{InChIKey_test}}.
+#' @seealso \code{\link{getSuspectInChIKey}}, \code{\link{getInChIKey.obabel}}, \code{\link{InChIKey_test}}.
 #'
 #' @export
 #'
@@ -445,6 +491,7 @@ getSuspectInChIKey.babel <- function(smiles,babel_dir,temp_dir) {
   setwd(dir)
   return(Babel_out[1])
 }
+
 
 #' Convert an InChI to SMILES with OpenBabel
 #'

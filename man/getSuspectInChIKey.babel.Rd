@@ -2,7 +2,7 @@
 % Please edit documentation in R/ChemicalCuration.R
 \name{getSuspectInChIKey.babel}
 \alias{getSuspectInChIKey.babel}
-\title{Convert SMILES to an InChIKey with OpenBabel}
+\title{Convert SMILES to an InChIKey with OpenBabel (superceded)}
 \usage{
 getSuspectInChIKey.babel(smiles,babel_dir,temp_dir)
 }
@@ -24,6 +24,7 @@ OpenBabel. If this is not the case, use webservices instead via
 \code{\link{getSuspectInChIKey}}. Note this creates \code{"temp_smiles.smi"}
 in the \code{temp_dir} directory and will overwrite any previous file of the same name.
 This function uses Babel default InChI options; standard InChIKeys will be generated.
+This is superceded by \code{\link{getInChIKey.obabel}}.
 }
 \examples{
 getSuspectInChIKey.babel("c1ccccc1", "C:/Program Files (x86)/OpenBabel-2.3.2", "C:/DATA")
@@ -36,6 +37,6 @@ getSuspectInChIKey.babel("", "C:/Program Files (x86)/OpenBabel-2.3.2", "C:/DATA"
 Emma Schymanski <emma.schymanski@uni.lu>
 }
 \seealso{
-\code{\link{getSuspectInChIKey}}, \code{\link{InChIKey_test}}.
+\code{\link{getSuspectInChIKey}}, \code{\link{getInChIKey.obabel}}, \code{\link{InChIKey_test}}.
 }
 

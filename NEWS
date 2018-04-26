@@ -1,3 +1,4 @@
+26.04.18 added obabel smiles to inchikey function, superceding babel form, version 0.1.12
 08.01.18 changed email address, upload to github as is, version 0.1.11
 03.08.17 added getAdductMassesFromFormula, version 0.1.10
 16.06.17 updated depict documentation https://github.com/rajarshi/cdkr/issues/49 but no version bump.
