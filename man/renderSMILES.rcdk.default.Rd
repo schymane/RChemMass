@@ -29,7 +29,7 @@ rcdk>3.4.1, use \code{\link{renderSMILES.rcdk}}. Best results with rcdk>3.4.1 an
 rcdklibs>2.0.
 }
 \details{
-More information about aromaticity: \code{\link{https://github.com/rajarshi/cdkr/issues/49}}
+More information about aromaticity: \url{https://github.com/rajarshi/cdkr/issues/49}
 }
 \examples{
 smiles <- "OS(=O)(=O)c1ccc(cc1)C(CC(=O)O)CC(=O)O"

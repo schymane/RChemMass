@@ -294,7 +294,7 @@ splitRrange <- function(genSmiles, nR1toN) {
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @seealso \code{\link{BuildSmiles}}, \code{\link{splitRrange}}, \code{\link{adjustRgroup}},
+#' @seealso \code{\link{buildSmiles}}, \code{\link{splitRrange}}, \code{\link{adjustRgroup}},
 #' To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 #'
 #' @return Returns a vector containing the resulting SMILES codes
@@ -371,7 +371,7 @@ RtoSMILES <- function(genSmiles, R_format, R_smiles, R_range) {
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @seealso \code{\link{BuildSmiles}}, \code{\link{splitRrange}}, \code{\link{RtoSMILES}},
+#' @seealso \code{\link{buildSmiles}}, \code{\link{splitRrange}}, \code{\link{RtoSMILES}},
 #' To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 #'
 #' @return Returns a vector containing the resulting SMILES codes and,
@@ -445,7 +445,7 @@ adjustRgroup <- function(genSmiles,R_format,ExtraAtoms=NULL,RDB=NULL,R_range=NUL
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @seealso \code{\link{BuildSmiles}}, \code{\link{MolFormFromSmiles.rcdk}}.
+#' @seealso \code{\link{buildSmiles}}, \code{\link{MolFormFromSmiles.rcdk}}.
 #' To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 #'
 #' @return Returns a vector containing the resulting SMILES codes
@@ -590,8 +590,8 @@ buildMemberLabels <- function(SeriesName, n_start, n_total, smiles_list=NULL,
 #' @description Given a starting formula and a "building block", this builds a series for formulas
 #' from \code{n_start} to \code{n_max}, adding a retention time for direct use in
 #' suspect screening. Naming is built on \code{series_name} and \code{n}. Formula
-#' manipulations are performed with \code{\link{enviPat}} and \code{\link{RMassBank}}.
-#' Can be used if generic structures are not available for \code{BuildSmiles}.
+#' manipulations are performed with \code{enviPat} and \code{RMassBank}.
+#' Can be used if generic structures are not available for \code{\link{buildSmiles}}.
 #'
 #' @usage build.homol(start_formula, building_block, series_name, n_start, n_max, rt=15)
 #'
@@ -608,7 +608,7 @@ buildMemberLabels <- function(SeriesName, n_start, n_total, smiles_list=NULL,
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @seealso \code{\link{BuildSmiles}}, \code{\link{check_chemform}}, \code{\link{mergeform}},
+#' @seealso \code{\link{buildSmiles}}, \code{\link{check_chemform}}, \code{\link{mergeform}},
 #' \code{\link{enviPat}}, \code{\link{findMz.formula}}.
 #'
 #' @return Returns a \code{n_max-n_start} by \code{4} array containing member names, formulas, RTs
@@ -673,7 +673,7 @@ build.homol <- function(start_formula, building_block, series_name, n_start, n_m
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @seealso \code{\link{build.homol}}, \code{\link{screen.homol}}.
+#' @seealso \code{\link{build.homol}}.
 #'
 #' @return Returns a \code{n_end-n_start} by \code{3} array containing member names, masses and RTs.
 #'

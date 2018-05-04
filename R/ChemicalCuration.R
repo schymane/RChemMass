@@ -360,9 +360,9 @@ check_ded2 <- function(formula, deduct) {
 #' Retrieve an InChIKey by SMILES or Name with Cactus/CTS
 #'
 #' @description A small wrapper function to retrieve an InChIKey with webservices. Cactus
-#' (\code{\link{https://cactus.nci.nih.gov/chemical/structure}}) is used to obtain a Key
+#' (\url{https://cactus.nci.nih.gov/chemical/structure}) is used to obtain a Key
 #' from SMILES; if this fails the Chemical Translation Service (CTS,
-#' \code{\link{http://cts.fiehnlab.ucdavis.edu/}} is queried by name.
+#' \url{http://cts.fiehnlab.ucdavis.edu/} is queried by name.
 #' Future extensions possible. If SMILES is available and Open Babel is installed,
 #' use \code{\link{getSuspectInChIKey.babel}} instead.
 #'
@@ -400,7 +400,7 @@ getSuspectInChIKey <- function(smiles,name) {
 #' Convert SMILES to an InChIKey with OpenBabel (obabel)
 #'
 #' @description A small wrapper function to convert SMILES to an InChIKey with OpenBabel
-#' (\code{\link{http://openbabel.org/wiki/Main_Page}}). Requires pre-installation of
+#' (\url{http://openbabel.org/wiki/Main_Page}). Requires pre-installation of
 #' OpenBabel. If this is not the case, use webservices instead via
 #' \code{\link{getSuspectInChIKey}}. Note this supercedes \code{\link{getSuspectInChIKey.babel}}
 #' This function uses Babel default InChI options; standard InChIKeys will be generated.
@@ -445,7 +445,7 @@ getInChIKey.obabel <- function(smiles,babel_dir) {
 #' Convert SMILES to an InChIKey with OpenBabel (superceded)
 #'
 #' @description A small wrapper function to convert SMILES to an InChIKey with OpenBabel
-#' (\code{\link{http://openbabel.org/wiki/Main_Page}}). Requires pre-installation of
+#' (\url{http://openbabel.org/wiki/Main_Page}). Requires pre-installation of
 #' OpenBabel. If this is not the case, use webservices instead via
 #' \code{\link{getSuspectInChIKey}}. Note this creates \code{"temp_smiles.smi"}
 #' in the \code{temp_dir} directory and will overwrite any previous file of the same name.
@@ -496,7 +496,7 @@ getSuspectInChIKey.babel <- function(smiles,babel_dir,temp_dir) {
 #' Convert an InChI to SMILES with OpenBabel
 #'
 #' @description A small wrapper function to convert an InChI to SMILES with OpenBabel
-#' (\code{\link{http://openbabel.org/wiki/Main_Page}}). Requires pre-installation of
+#' (\url{http://openbabel.org/wiki/Main_Page}). Requires pre-installation of
 #' OpenBabel. If this is not the case, use webservices instead via
 #' \code{\link{getCactus}}.  Note this creates \code{"temp_inchi.inchi"}
 #' in the \code{temp_dir} directory and will overwrite any previous file of the same name.
@@ -543,12 +543,12 @@ getSmilesFromInChI.babel <- function(inchi,babel_dir, temp_dir) {
 #'
 #' @description A wrapper function to obtain identifiers from an InChIKey
 #' using various webservices. PubChem CIDs are obtained with \code{\link{getPcID}} from
-#' PubChem direct (\code{\link{https://pubchem.ncbi.nlm.nih.gov/}}), ChemSpider IDs
-#' directly from ChemSpider (\code{\link{http://www.chemspider.com/}}) with
+#' PubChem direct (\url{https://pubchem.ncbi.nlm.nih.gov/}), ChemSpider IDs
+#' directly from ChemSpider (\url{http://www.chemspider.com/}) with
 #' \code{\link{getCSID}}. CAS numbers are retrieved using \code{\link{getCactus}} from
-#' Cactus (\code{\link{https://cactus.nci.nih.gov/chemical/structure}});
+#' Cactus (\url{https://cactus.nci.nih.gov/chemical/structure});
 #' if this fails the Chemical Translation Service (CTS,
-#' \code{\link{http://cts.fiehnlab.ucdavis.edu/}} is queried. Options are given to
+#' \url{http://cts.fiehnlab.ucdavis.edu/} is queried. Options are given to
 #' return all CAS numbers, the "smallest" CAS number or the first entry.
 #'
 #' @usage getSuspectIdentifiers(InChIKey, allCAS=FALSE, sep=",", minCAS=TRUE)

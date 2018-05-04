@@ -17,7 +17,7 @@ Returns the InChIKey retrieved, or alternative output from Babel. Run
 }
 \description{
 A small wrapper function to convert SMILES to an InChIKey with OpenBabel
-(\code{\link{http://openbabel.org/wiki/Main_Page}}). Requires pre-installation of
+(\url{http://openbabel.org/wiki/Main_Page}). Requires pre-installation of
 OpenBabel. If this is not the case, use webservices instead via
 \code{\link{getSuspectInChIKey}}. Note this supercedes \code{\link{getSuspectInChIKey.babel}}
 This function uses Babel default InChI options; standard InChIKeys will be generated.

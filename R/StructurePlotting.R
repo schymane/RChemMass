@@ -30,7 +30,7 @@
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @details More information about aromaticity: \code{\link{https://github.com/rajarshi/cdkr/issues/49}}
+#' @details More information about aromaticity: \url{https://github.com/rajarshi/cdkr/issues/49}
 #'
 #' @seealso \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}
 #'
@@ -114,7 +114,7 @@ renderSMILES.rcdk.default <- function(smiles, kekulise=TRUE, coords=c(0,0,100,10
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @details More information about aromaticity: \code{\link{https://github.com/rajarshi/cdkr/issues/49}}
+#' @details More information about aromaticity: \url{https://github.com/rajarshi/cdkr/issues/49}
 #'
 #' @seealso \code{\link{view.molecule.2d}} \code{\link{renderSMILES.CDKdepict}}
 #'

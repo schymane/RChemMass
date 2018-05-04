@@ -24,12 +24,12 @@ Returns a list with the resulting identifiers, with \code{NA} if the query faile
 \description{
 A wrapper function to obtain identifiers from an InChIKey
 using various webservices. PubChem CIDs are obtained with \code{\link{getPcID}} from
-PubChem direct (\code{\link{https://pubchem.ncbi.nlm.nih.gov/}}), ChemSpider IDs
-directly from ChemSpider (\code{\link{http://www.chemspider.com/}}) with
+PubChem direct (\url{https://pubchem.ncbi.nlm.nih.gov/}), ChemSpider IDs
+directly from ChemSpider (\url{http://www.chemspider.com/}) with
 \code{\link{getCSID}}. CAS numbers are retrieved using \code{\link{getCactus}} from
-Cactus (\code{\link{https://cactus.nci.nih.gov/chemical/structure}});
+Cactus (\url{https://cactus.nci.nih.gov/chemical/structure});
 if this fails the Chemical Translation Service (CTS,
-\code{\link{http://cts.fiehnlab.ucdavis.edu/}} is queried. Options are given to
+\url{http://cts.fiehnlab.ucdavis.edu/} is queried. Options are given to
 return all CAS numbers, the "smallest" CAS number or the first entry.
 }
 \examples{

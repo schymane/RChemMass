@@ -16,9 +16,9 @@ Returns the InChIKey retrieved, or \code{NA}.
 }
 \description{
 A small wrapper function to retrieve an InChIKey with webservices. Cactus
-(\code{\link{https://cactus.nci.nih.gov/chemical/structure}}) is used to obtain a Key
+(\url{https://cactus.nci.nih.gov/chemical/structure}) is used to obtain a Key
 from SMILES; if this fails the Chemical Translation Service (CTS,
-\code{\link{http://cts.fiehnlab.ucdavis.edu/}} is queried by name.
+\url{http://cts.fiehnlab.ucdavis.edu/} is queried by name.
 Future extensions possible. If SMILES is available and Open Babel is installed,
 use \code{\link{getSuspectInChIKey.babel}} instead.
 }

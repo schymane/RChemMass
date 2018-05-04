@@ -61,7 +61,7 @@ As opposed to older versions, kekulise=FALSE now produces strange behaviour for 
 SMILES.
 }
 \details{
-More information about aromaticity: \code{\link{https://github.com/rajarshi/cdkr/issues/49}}
+More information about aromaticity: \url{https://github.com/rajarshi/cdkr/issues/49}
 }
 \examples{
 smiles <- "OS(=O)(=O)c1ccc(cc1)C(CC(=O)O)CC(=O)O"

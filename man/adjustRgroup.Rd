@@ -60,7 +60,7 @@ buildCDKdepictURL(test_genSmiles[1])
 Emma Schymanski <emma.schymanski@uni.lu>
 }
 \seealso{
-\code{\link{BuildSmiles}}, \code{\link{splitRrange}}, \code{\link{RtoSMILES}},
+\code{\link{buildSmiles}}, \code{\link{splitRrange}}, \code{\link{RtoSMILES}},
 To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 }
 

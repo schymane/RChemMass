@@ -42,7 +42,7 @@ RtoSMILES(test_smiles,"[R1]","C",c(1,5))
 Emma Schymanski <emma.schymanski@uni.lu>
 }
 \seealso{
-\code{\link{BuildSmiles}}, \code{\link{splitRrange}}, \code{\link{adjustRgroup}},
+\code{\link{buildSmiles}}, \code{\link{splitRrange}}, \code{\link{adjustRgroup}},
 To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 }
 

@@ -48,6 +48,6 @@ c12aes_MmHm <- build.homol.byMass(309.1772,44.026215,"C12AES",0,9,1)
 Emma Schymanski <emma.schymanski@uni.lu>
 }
 \seealso{
-\code{\link{build.homol}}, \code{\link{screen.homol}}.
+\code{\link{build.homol}}.
 }
 

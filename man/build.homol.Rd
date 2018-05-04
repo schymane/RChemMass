@@ -31,8 +31,8 @@ and neutral monoisotopic mass.
 Given a starting formula and a "building block", this builds a series for formulas
 from \code{n_start} to \code{n_max}, adding a retention time for direct use in
 suspect screening. Naming is built on \code{series_name} and \code{n}. Formula
-manipulations are performed with \code{\link{enviPat}} and \code{\link{RMassBank}}.
-Can be used if generic structures are not available for \code{BuildSmiles}.
+manipulations are performed with \code{enviPat} and \code{RMassBank}.
+Can be used if generic structures are not available for \code{\link{buildSmiles}}.
 }
 \examples{
 las <- build.homol("C16H26O3S","CH2","LAS",10,14)
@@ -47,7 +47,7 @@ npeos <- build.homol("C17H28O5S","C2H4O","NPEO_SO4_",1,8)
 Emma Schymanski <emma.schymanski@uni.lu>
 }
 \seealso{
-\code{\link{BuildSmiles}}, \code{\link{check_chemform}}, \code{\link{mergeform}},
+\code{\link{buildSmiles}}, \code{\link{check_chemform}}, \code{\link{mergeform}},
 \code{\link{enviPat}}, \code{\link{findMz.formula}}.
 }
 

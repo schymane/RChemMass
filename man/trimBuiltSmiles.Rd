@@ -26,7 +26,7 @@ trimBuiltSmiles(LAS_smiles)
 Emma Schymanski <emma.schymanski@uni.lu>
 }
 \seealso{
-\code{\link{BuildSmiles}}, \code{\link{MolFormFromSmiles.rcdk}}.
+\code{\link{buildSmiles}}, \code{\link{MolFormFromSmiles.rcdk}}.
 To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 }
 
