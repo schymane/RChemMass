@@ -23,7 +23,7 @@ Returns a list with the resulting identifiers, with \code{NA} if the query faile
 }
 \description{
 A wrapper function to obtain identifiers from an InChIKey
-using various webservices. PubChem CIDs are obtained with \code{\link{getPcID}} from
+using various webservices. PubChem CIDs are obtained with \code{\link{getPcId}} from
 PubChem direct (\url{https://pubchem.ncbi.nlm.nih.gov/}), ChemSpider IDs
 directly from ChemSpider (\url{http://www.chemspider.com/}) with
 \code{\link{getCSID}}. CAS numbers are retrieved using \code{\link{getCactus}} from

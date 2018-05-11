@@ -542,7 +542,7 @@ getSmilesFromInChI.babel <- function(inchi,babel_dir, temp_dir) {
 #' Get PubChem CID, ChemSpider ID and CAS from InChIKey via webservices
 #'
 #' @description A wrapper function to obtain identifiers from an InChIKey
-#' using various webservices. PubChem CIDs are obtained with \code{\link{getPcID}} from
+#' using various webservices. PubChem CIDs are obtained with \code{\link{getPcId}} from
 #' PubChem direct (\url{https://pubchem.ncbi.nlm.nih.gov/}), ChemSpider IDs
 #' directly from ChemSpider (\url{http://www.chemspider.com/}) with
 #' \code{\link{getCSID}}. CAS numbers are retrieved using \code{\link{getCactus}} from
