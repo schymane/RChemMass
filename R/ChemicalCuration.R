@@ -595,7 +595,7 @@ getSuspectIdentifiers <- function(InChIKey, allCAS=FALSE, sep=",", minCAS=TRUE) 
     #cas <- "NA"
   }
   # if we have something from CTS, get the CAS number. Otherwise stays as NA
-  if(!is.na(CTS_info[1]) && (nchar(cas[1])<=2)){
+  if(!is.na(CTS_info[1]) && !is.na(nchar(cas[1])<=2)){
     if("CAS" %in% CTS.externalIdTypes(CTS_info)) {
       # If multiple CAS, take the shortest one.
       cas <- CTS.externalIdSubset(CTS_info,"CAS")
