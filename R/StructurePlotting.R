@@ -187,6 +187,8 @@ renderSMILES.rcdk <- function(smiles, kekulise=TRUE, coords=c(0,0,100,100), widt
 #' @param annotate (optional) Features to interpret the structure. Default \code{"none"}, other
 #' options Atom Numbers, Atom Mapping, Color Map, Atom Value
 #' (\code{"number", "mapidx", "colmap", "atomvalue"}) respectively.
+#' @param reserved If \code{TRUE} (default), encodes all URL reserved characters. See 
+#' \code{URLencode}.
 #'
 #' @author Emma Schymanski (R wrapper, <emma.schymanski@@uni.lu>), John Mayfield (CDK Depict)
 #'
@@ -205,13 +207,12 @@ renderSMILES.rcdk <- function(smiles, kekulise=TRUE, coords=c(0,0,100,100), widt
 #' buildCDKdepictURL("CCOCCOCCO |Sg:n:3,4,5::ht|",style="cow", smarts="CCO",title="PEGn")
 #' buildCDKdepictURL("OS(=O)(=O)c1ccc(cc1)C([R1]C(=O)O)[R2]C(=O)O", style="cow",title="SPADCs",
 #' abbr="off",suppressh=TRUE,showtitle=TRUE,zoom=5,annotate="number",smarts="C(=O)O")
-#' buildCDKdepictURL("OS(=O)(=O)c1ccc(cc1)C(CC(=O)O)CC(=O)O |Sg:n:15:m:ht,Sg:n:11:n:ht|", style="cow",
-#' title="SPADCs, n+m=0-5",abbr="off",suppressh=TRUE,showtitle=TRUE,zoom=5,annotate="number",smarts="C(=O)O")
 #'
 buildCDKdepictURL <- function(smiles, style="bow",title=NULL, abbr="off", smarts=NULL,
-                              suppressh=TRUE,showtitle=TRUE,zoom=2,annotate="none") {
+                              suppressh=TRUE,showtitle=TRUE,zoom=2,annotate="none",reserved=TRUE) {
   # this builds the URL with varying complexity depending on input
-  url_base <- "https://cdkdepict-openchem.rhcloud.com/depict/"
+  url_base <- "http://simolecule.com/cdkdepict/depict/"
+  # oldurl: url_base <- "https://cdkdepict-openchem.rhcloud.com/depict/"
   # style is front of the URL, before SMILES
   # values: color on white, color on black, black on white, white on black, neon on black
   #   c("cow","cob","bow","wob","nob")
@@ -238,7 +239,7 @@ buildCDKdepictURL <- function(smiles, style="bow",title=NULL, abbr="off", smarts
     title <- sub("+","%2B",title,fixed=TRUE)
     smiles_string <- paste0(smiles_string, " ", as.character(title))
   }
-  url_base <- paste0(url_base,URLencode(smiles_string))
+  url_base <- paste0(url_base,URLencode(smiles_string,reserved = reserved))
   # now define the options at the end
   url_end <- "&abbr="
   #abbr: 4 settings: None, Groups, Reagents, Reagents and Groups
@@ -262,7 +263,7 @@ buildCDKdepictURL <- function(smiles, style="bow",title=NULL, abbr="off", smarts
   }
   # if smarts are defined, add this field
   if (!is.null(smarts)) {
-    url_end <- paste0(url_end,"&sma=",URLencode(as.character(smarts)))
+    url_end <- paste0(url_end,"&sma=",URLencode(as.character(smarts),reserved=reserved))
   }
   # calculate the zoom - warn if too large
   if (!is.numeric(zoom) || zoom<0) {

@@ -34,6 +34,9 @@ structure in the web browser. Warnings at zoom>=10.}
 \item{annotate}{(optional) Features to interpret the structure. Default \code{"none"}, other
 options Atom Numbers, Atom Mapping, Color Map, Atom Value
 (\code{"number", "mapidx", "colmap", "atomvalue"}) respectively.}
+
+\item{reserved}{If \code{TRUE} (default), encodes all URL reserved characters. See 
+\code{URLencode}.}
 }
 \value{
 Returns a URL for direct use in a browser, or for rendering in R.
@@ -52,8 +55,6 @@ buildCDKdepictURL("CCOCCOCCO |Sg:n:3,4,5::ht|",style="cow", smarts="CCO")
 buildCDKdepictURL("CCOCCOCCO |Sg:n:3,4,5::ht|",style="cow", smarts="CCO",title="PEGn")
 buildCDKdepictURL("OS(=O)(=O)c1ccc(cc1)C([R1]C(=O)O)[R2]C(=O)O", style="cow",title="SPADCs",
 abbr="off",suppressh=TRUE,showtitle=TRUE,zoom=5,annotate="number",smarts="C(=O)O")
-buildCDKdepictURL("OS(=O)(=O)c1ccc(cc1)C(CC(=O)O)CC(=O)O |Sg:n:15:m:ht,Sg:n:11:n:ht|", style="cow",
-title="SPADCs, n+m=0-5",abbr="off",suppressh=TRUE,showtitle=TRUE,zoom=5,annotate="number",smarts="C(=O)O")
 
 }
 \author{
