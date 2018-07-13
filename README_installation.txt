@@ -58,5 +58,5 @@ install_github("rajarshi/cdkr", subdir="rcdk")
 # Functions needing this will ask for the path.
 
 # Then finally, install RChemMass:
-install.packages("your_path/RChemMass_0.1.1.tar.gz", repos=NULL, type="source")
+install_github("schymane/RChemMass")
 
