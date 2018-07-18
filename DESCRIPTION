@@ -1,7 +1,7 @@
 Package: RChemMass
 Type: Package
 Title: Various Cheminformatic, Curation and Mass Spectrometry Functions
-Version: 0.1.14
+Version: 0.1.15
 Author: Emma Schymanski
 Authors@R: c(person('Emma', 'Schymanski', role=c('aut','cre'), email='emma.schymanski@uni.lu'),
 			person('Rajarshi', 'Guha', role=c('ctb'), email='rajarshi.guha@gmail.com'),
@@ -16,16 +16,17 @@ Description: RChemMass combines many useful functions for manipulating
 	and discussions! Function specific contributors are mentioned 
 	in the function documentation.
 License: Artistic-2.0
-SystemRequirements: OpenBabel
+SystemRequirements: OpenBabel, splitPFAS
 Depends: 
     rcdk,rcdklibs,RMassBank,curl,rsvg,enviPat
 Suggests: 
     devtools,rinchi,mzR
 Collate:
-    'BuildStructandSeries.R'
+  'BuildStructandSeries.R'
 	'ChemicalCuration.R'
 	'CompTox.R'
 	'StructurePlotting.R'
+	'SplitPFAS.R'
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1

@@ -1,3 +1,4 @@
+18.07.18 add SplitPFAS functions and extdata, v0.1.15
 09.07.18 fixed CDKDepict URL to new URL location, v0.1.14
 04.05.18 fixed documentation issues, v0.1.13
 26.04.18 added obabel smiles to inchikey function, superceding babel form, version 0.1.12
