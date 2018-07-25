@@ -493,6 +493,49 @@ getSuspectInChIKey.babel <- function(smiles,babel_dir,temp_dir) {
 }
 
 
+#' Convert SMILES to an InChI with OpenBabel (obabel)
+#'
+#' @description A small wrapper function to convert SMILES to an InChI with OpenBabel
+#' (\url{http://openbabel.org/wiki/Main_Page}). Requires pre-installation of
+#' OpenBabel. 
+#' This function uses Babel default InChI options; standard InChIs will be generated.
+#'
+#' @usage getInChI.obabel(smiles,babel_dir)
+#'
+#' @param smiles SMILES code to convert to the InChI.
+#' @param babel_dir Location of folder containing \code{"obabel.exe"}.
+#'
+#' @return Returns the InChI retrieved, or alternative output from Babel. 
+#'
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#'
+#' @seealso \code{\link{getInChI.obabel}}.
+#'
+#' @export
+#'
+#' @examples
+#' babel_dir <- "C:/Program Files (x86)/OpenBabel-2.3.2"
+#' getInChI.obabel("c1ccccc1", babel_dir)
+#' Various failed conversions:
+#' getInChI.obabel("blah", babel_dir)
+#' getInChI.obabel("", babel_dir)
+#'
+getInChI.obabel <- function(smiles,babel_dir) {
+  dir <- getwd()
+  if (file.exists(babel_dir)) {
+    setwd(babel_dir)
+    Babel_out <- system("obabel -ismi -oinchi",input=smiles,show.output.on.console = F,intern=T)
+  } else {
+    Babel_out = ""
+    warning("Incorrect Babel directory or directory does not exist")
+  }
+  setwd(dir)
+  return(Babel_out[1])
+}
+
+
+
+
 #' Convert an InChI to SMILES with OpenBabel
 #'
 #' @description A small wrapper function to convert an InChI to SMILES with OpenBabel
