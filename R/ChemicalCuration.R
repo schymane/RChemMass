@@ -909,6 +909,70 @@ InChIKey_test <- function(InChIKey) {
 }
 
 
+#' Retrieve InChIKey from PubChem CID
+#' 
+#' Retrieves InChIKey from PubChem CID using PUG REST.
+#' 
+#' This searches PubChem for the CID and returns the InChIKey. The function 
+#' may work for other output, but this has not been tested.
+#' 
+#' @usage getPCInChIKey(query, from = "cid", to="InChIKey")
+#' 
+#' @param query ID to be converted
+#' @param from Type of input ID (default \code{cid}, i.e. PubChem CID)
+#' @return The InChIKey
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' Pubchem REST:
+#' \url{https://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html}
+#' 
+#' @examples
+#' getPCInChIKey("2519")
+#' 
+#' @export
+getPCInChIKey <- function(query, from = "cid", to="InChIKey")
+{
+  baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound"
+  url <- paste(baseURL, from, query, "property", to, "json",sep="/")
+  #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/2244/property/MolecularFormula,InChIKey/
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    url_data <- getURL(URLencode(url),timeout=5),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  # This happens if the PCID is not found:
+  r <- fromJSON(url_data)
+  
+  if(!is.null(r$Fault))
+    return(NA)
+  
+  #titleEntry <- which(unlist(lapply(r$InformationList$Information, function(i) !is.null(i$Title))))
+  
+  #titleEntry <- titleEntry[which.min(sapply(titleEntry, function(x)r$InformationList$Information[[x]]$inchikey))]
+  
+  InChIKey <- as.character(unlist(r)[2])
+  
+  if(is.null(InChIKey)){
+    return(NA)
+  } else{
+    return(InChIKey)
+  }
+}
+
+
 # # Loops that need to be turned into functions:
 # for (i in 1:length(cmpds$ID)) {
 #   cas_rn <-  as.character(cmpds$Dat_PSMV_Anhang_1.CASNr[i])
