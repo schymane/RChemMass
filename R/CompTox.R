@@ -93,7 +93,6 @@ buildCompToxURL <- function(search_string, type="simple", add_utf8=FALSE, browse
   if (add_utf8) {
     url_base <- paste0(url_base1,"utf8=%E2%9C%93&search=")
     #url_base <- "https://comptox.epa.gov/dashboard/dsstoxdb/results?utf8=<U+2713>&search="
-    #url_base <- paste0(url_base1, "utf8=✓&search=")
     #only use this option if internet explorer is in use...
     # browseURL(paste0(url_base, "benzene"),browser="C:/Program Files/Internet Explorer/iexplore.exe")
   } else {
@@ -130,7 +129,6 @@ buildCompToxURL <- function(search_string, type="simple", add_utf8=FALSE, browse
     # https://comptox.epa.gov/dashboard/dsstoxdb/results?utf8=%E2%9C%93&mass=2&mass1=162.115698&mass2=5&ppm=1&single_component=1
     if (add_utf8) {
       url_base <- paste0(url_base1,"utf8=%E2%9C%93&search=")
-      #url_base <- paste0(url_base1,"utf8=✓&")
     } else {
       url_base <- url_base1
     }
