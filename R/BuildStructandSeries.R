@@ -458,7 +458,7 @@ adjustRgroup <- function(genSmiles,R_format,ExtraAtoms=NULL,RDB=NULL,R_range=NUL
 #'
 trimBuiltSmiles <- function(smiles_list) {
   formulas <- as.vector(sapply(smiles_list, MolFormFromSmiles.rcdk))
-  smiles_trim <- LAS_smiles[!duplicated(formulas)]
+  smiles_trim <- smiles_trim[!duplicated(formulas)]
   return(smiles_trim)
 }
 
