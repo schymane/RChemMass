@@ -1,0 +1,15 @@
+citHeader("To cite package 'RChemMass' in publications use:")
+
+year <- 2019
+
+citEntry(entry="misc",
+		title = "RChemMass: Various Cheminformatic, Curation and Mass Spectrometry Functions",
+		author = personList(as.person("Emma L. Schymanski")),
+		year = 2019,
+		url = "https://github.com/schymane/RChemMass",
+
+		
+		textVersion =
+				paste("E. L. Schymanski", year,
+						"RChemMass: Various Cheminformatic, Curation and Mass Spectrometry Functions",
+						"https://github.com/schymane/RChemMass", sep=", "))

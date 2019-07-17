@@ -30,7 +30,7 @@
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @details More information about aromaticity: \url{https://github.com/rajarshi/cdkr/issues/49}
+#' @details More information about aromaticity: \url{https://github.com/CDK-R/cdkr/issues/49}
 #'
 #' @seealso \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}
 #'
@@ -114,7 +114,7 @@ renderSMILES.rcdk.default <- function(smiles, kekulise=TRUE, coords=c(0,0,100,10
 #'
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
 #'
-#' @details More information about aromaticity: \url{https://github.com/rajarshi/cdkr/issues/49}
+#' @details More information about aromaticity: \url{https://github.com/CDK-R/cdkr/issues/49}
 #'
 #' @seealso \code{\link{view.molecule.2d}} \code{\link{renderSMILES.CDKdepict}}
 #'
@@ -211,7 +211,7 @@ renderSMILES.rcdk <- function(smiles, kekulise=TRUE, coords=c(0,0,100,100), widt
 buildCDKdepictURL <- function(smiles, style="bow",title=NULL, abbr="off", smarts=NULL,
                               suppressh=TRUE,showtitle=TRUE,zoom=2,annotate="none",reserved=TRUE) {
   # this builds the URL with varying complexity depending on input
-  url_base <- "http://simolecule.com/cdkdepict/depict/"
+  url_base <- "http://www.simolecule.com/cdkdepict/depict/"
   # oldurl: url_base <- "https://cdkdepict-openchem.rhcloud.com/depict/"
   # style is front of the URL, before SMILES
   # values: color on white, color on black, black on white, white on black, neon on black

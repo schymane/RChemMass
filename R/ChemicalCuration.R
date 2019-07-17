@@ -5,8 +5,8 @@
 
 # # package installation and dependencies (note rinchi is only on github)
 # library(devtools)
-# # install_github("cdkr", "rajarshi", subdir="rinchi")
-# # install_github("rajarshi/cdkr", subdir="rinchi")
+# # install_github("cdkr", "CDK-R", subdir="rinchi")
+# # install_github("CDK-R/cdkr", subdir="rinchi")
 # library(rinchi)
 # library(RMassBank)
 # library(rcdk)
