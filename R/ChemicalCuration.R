@@ -973,6 +973,73 @@ getPCInChIKey <- function(query, from = "cid", to="InChIKey")
 }
 
 
+#' Retrieve PubChem CIDs from SMILES or InChI
+#' 
+#' Retrieves PubChem CIDs from SMILES or InChI using PUG REST.
+#' By "default", this also returns the CID of the prefered tautomer
+#' according to current PubChem standardization procedures
+#' 
+#' This searches PubChem by SMILES and/or InChI and returns CIDs. The function 
+#' may work for other output, but this has not been tested.
+#' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPCID.smiles(query, from = "smiles", to="cids")
+#' 
+#' @param query SMILES or InChI (or other) to be converted
+#' @param from Type of input ID (default \code{"smiles"}, i.e. SMILES, alternative
+#' \code{"inchi"} to retrieve via InChI, or others (untried))
+#' @return The matching CID
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' Pubchem REST:
+#' \url{https://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html}
+#' 
+#' @examples
+#' getPCID.smiles("CC(=O)OC1=CC=CC=C1C(=O)O")
+#' 
+#' @export
+getPCID.smiles <- function(query, from = "smiles", to="cids")
+{
+  baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/"
+  url <- paste0(baseURL, from, "/", to, "/JSON?", from, "=", query)
+  #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/cids/JSON?smiles=CC(=O)OC1=CC=CC=C1C(=O)O
+
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    url_data <- getURL(URLencode(url),timeout=20),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  # This happens if the PCID is not found:
+  r <- fromJSON(url_data)
+  
+  if(!is.null(r$Fault))
+    return(NA)
+  
+  PCID <- as.character(unlist(r)[1])
+  
+  if(is.null(PCID)){
+    return(NA)
+  } else{
+    return(PCID)
+  }
+}
+
+
+
+
 # # Loops that need to be turned into functions:
 # for (i in 1:length(cmpds$ID)) {
 #   cas_rn <-  as.character(cmpds$Dat_PSMV_Anhang_1.CASNr[i])

@@ -1,3 +1,4 @@
+13.12.19 added getPCID.smiles, v0.1.20
 17.07.19 fixed documentation URLs, added CITATION, v0.1.19
 21.06.19 fixed bug in trimBuiltSmiles (thanks meowcat), v0.1.18
 09.08.18 add getPCInChIKey, v0.1.17
