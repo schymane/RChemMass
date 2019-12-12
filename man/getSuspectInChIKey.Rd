@@ -26,10 +26,9 @@ use \code{\link{getSuspectInChIKey.babel}} instead.
 getSuspectInChIKey("c1ccccc1", "benzene")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getSuspectInChIKey.babel}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

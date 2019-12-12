@@ -33,10 +33,9 @@ getSuspectInChIKey.babel("blah", "C:/Program Files (x86)/OpenBabel-2.3.2", "C:/D
 getSuspectInChIKey.babel("", "C:/Program Files (x86)/OpenBabel-2.3.2", "C:/DATA")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getSuspectInChIKey}}, \code{\link{getInChIKey.obabel}}, \code{\link{InChIKey_test}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

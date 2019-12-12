@@ -38,11 +38,10 @@ test_smiles <- "P(=O)(OC[C@H](COP(=O)(O)OC[C@H](OC(=O)[R2])COC(=O)[R1])O)(O)OC[C
 RtoSMILES(test_smiles,"[R1]","C",c(1,5))
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{buildSmiles}}, \code{\link{splitRrange}}, \code{\link{adjustRgroup}},
 To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

@@ -32,11 +32,10 @@ smarts="C(=O)O")
 renderSMILES.CDKdepict(test_url)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{buildCDKdepictURL}} to create the URL, \code{\link{renderSMILES.rcdk}}
 for alternative plotting direct from SMILES.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

@@ -61,7 +61,7 @@ As opposed to older versions, kekulise=FALSE now produces strange behaviour for 
 SMILES.
 }
 \details{
-More information about aromaticity: \url{https://github.com/rajarshi/cdkr/issues/49}
+More information about aromaticity: \url{https://github.com/CDK-R/cdkr/issues/49}
 }
 \examples{
 smiles <- "OS(=O)(=O)c1ccc(cc1)C(CC(=O)O)CC(=O)O"
@@ -72,10 +72,9 @@ renderSMILES.rcdk(smiles,kekulise=TRUE)
 renderSMILES.rcdk(smiles,kekulise=TRUE, abbr="off")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{view.molecule.2d}} \code{\link{renderSMILES.CDKdepict}}
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

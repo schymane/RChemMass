@@ -31,10 +31,9 @@ getInChIKey.obabel("", babel_dir)
 InChIKey_test(getInChIKey.obabel("blah",babel_dir))
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getSuspectInChIKey}}, \code{\link{InChIKey_test}}, \code{\link{getSuspectInChIKey.babel}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

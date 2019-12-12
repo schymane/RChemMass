@@ -26,11 +26,10 @@ getCDKlogPs("c1ccc2c(c1)[nH]nn2")
 getCDKlogPs("c1ccc2c(c1)[nH]nn2",kekulise=FALSE)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{parse.smiles}}, \code{\link{get.alogp}}, \code{\link{get.xlogp}},
 \code{\link{getCDKlogPsAndRT}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

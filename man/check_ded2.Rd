@@ -26,11 +26,10 @@ check_ded2("C6H6", "H2")
 check_ded2("C6H6", "H3O")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{check_ded}}, \code{\link{enviPat}}, \code{\link{getSuspectFormulaMass}},
 \code{\link{formulastring.to.list}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

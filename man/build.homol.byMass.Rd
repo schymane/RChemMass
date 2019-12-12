@@ -44,10 +44,9 @@ findMz.formula("C14H30O5S", mode="mH")
 c12aes_MmHm <- build.homol.byMass(309.1772,44.026215,"C12AES",0,9,1)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{build.homol}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

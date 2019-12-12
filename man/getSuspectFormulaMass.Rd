@@ -25,11 +25,10 @@ getSuspectFormulaMass("c1ccccc1")
 
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getMolecule}}, \code{\link{get.mol2formula}}, \code{\link{enviPat}},
 \code{\link{getSuspectMasses}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

@@ -28,11 +28,10 @@ getSuspectMasses("c1ccccc1", c("M+H","M+2H","M+3Na"))
 
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getMolecule}}, \code{\link{get.mol2formula}}, \code{\link{enviPat}},
 \code{\link{check_ded2}}, \code{\link{getSuspectFormulaMass}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

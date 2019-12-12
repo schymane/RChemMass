@@ -24,10 +24,9 @@ CAS_fix("1/12/5392")
 CAS_fix("NotCASNumber")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{CAS_test}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

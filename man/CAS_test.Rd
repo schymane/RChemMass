@@ -23,10 +23,9 @@ CAS_test("95-14-7")
 CAS_test("01.03.7440")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getSuspectIdentifiers}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

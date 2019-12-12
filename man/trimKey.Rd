@@ -23,10 +23,9 @@ trimKey(CactusKey)
 trimKey("UHOVQNZJYSORNB-UHFFFAOYSA-N")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getCactus}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

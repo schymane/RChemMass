@@ -57,11 +57,10 @@ buildCDKdepictURL("OS(=O)(=O)c1ccc(cc1)C([R1]C(=O)O)[R2]C(=O)O", style="cow",tit
 abbr="off",suppressh=TRUE,showtitle=TRUE,zoom=5,annotate="number",smarts="C(=O)O")
 
 }
-\author{
-Emma Schymanski (R wrapper, <emma.schymanski@uni.lu>), John Mayfield (CDK Depict)
-}
 \seealso{
 \code{\link{renderSMILES.CDKdepict}} to use the resulting structure in plotting,
 \code{\link{renderSMILES.rcdk}} for alternative rendering.
 }
-
+\author{
+Emma Schymanski (R wrapper, <emma.schymanski@uni.lu>), John Mayfield (CDK Depict)
+}

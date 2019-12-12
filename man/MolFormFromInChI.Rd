@@ -23,10 +23,9 @@ inchi <- "InChI=1S/C2H4O2/c1-2(3)4/h1H3,(H,3,4)"
 MolFormFromInChI(inchi)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{MolFormFromSmiles.rcdk}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

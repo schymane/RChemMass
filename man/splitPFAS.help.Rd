@@ -26,11 +26,10 @@ splitPFAStools_name <- "MetFrag2.4.5-Tools.jar"
 splitPFAS.help(splitPFAStools_name)
 
 }
+\seealso{
+\code{\link{splitPFAS}}
+}
 \author{
 Emma Schymanski <emma.schymanski@uni.lu> in partnership with Christoph Ruttkies (MetFragTools)
 and Zhanyun Wang (ETHZ, PFAS examples).
 }
-\seealso{
-\code{\link{splitPFAS}}
-}
-

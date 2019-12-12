@@ -95,4 +95,3 @@ buildCompToxURL("162.115", type="mass_range", browse=TRUE, mass_entry="162.116",
 \author{
 Emma Schymanski (R wrapper, <emma.schymanski@uni.lu>), Antony Williams (CompTox Dashboard)
 }
-

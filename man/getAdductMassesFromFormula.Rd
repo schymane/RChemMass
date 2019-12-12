@@ -25,11 +25,10 @@ getAdductMassesFromFormula("C9H6D3ClO3")
 getAdductMassesFromFormula("C6H6")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getSuspectFormulaMass}}, \code{\link{enviPat}},
 \code{\link{getSuspectMasses}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

@@ -28,10 +28,9 @@ getInChI.obabel("blah", babel_dir)
 getInChI.obabel("", babel_dir)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getInChI.obabel}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

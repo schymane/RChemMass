@@ -4,10 +4,19 @@
 \alias{splitPFAS.csv}
 \title{Run SplitPFAS on a CSV file containing SMILES}
 \usage{
-splitPFAS.csv(pfas_file, splitPFAStools_name, smarts_file, babel_dir,
-  incl_image = TRUE, smiles_col_index = 3, SMILES_KeyCheck = TRUE,
-  func_group_col_index = 5, Func_Group_KeyCheck = FALSE,
-  pfas_part_col_index = 6, PFAS_Part_KeyCheck = FALSE)
+splitPFAS.csv(
+  pfas_file,
+  splitPFAStools_name,
+  smarts_file,
+  babel_dir,
+  incl_image = TRUE,
+  smiles_col_index = 3,
+  SMILES_KeyCheck = TRUE,
+  func_group_col_index = 5,
+  Func_Group_KeyCheck = FALSE,
+  pfas_part_col_index = 6,
+  PFAS_Part_KeyCheck = FALSE
+)
 }
 \arguments{
 \item{pfas_file}{Name of the CSV file containing at least one SMILES column}
@@ -63,10 +72,9 @@ splitPFAS.csv(pfas_file, splitPFAStools_name, smarts_file, babel_dir,
               Func_Group_KeyCheck = FALSE, PFAS_Part_KeyCheck = FALSE)
               
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{splitPFAS.help}}, \code{\link{splitPFAS}}
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

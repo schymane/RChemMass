@@ -22,11 +22,10 @@ LAS_smiles <- buildSmiles(LAS_gen_smiles, "{C,C}", splitRrange(LAS_gen_smiles, "
 trimBuiltSmiles(LAS_smiles)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{buildSmiles}}, \code{\link{MolFormFromSmiles.rcdk}}.
 To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

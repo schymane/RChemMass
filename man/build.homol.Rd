@@ -43,11 +43,10 @@ c13aes <- build.homol("C15H32O5S","C2H4O","C13AES",1,6)
 npeos <- build.homol("C17H28O5S","C2H4O","NPEO_SO4_",1,8)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{buildSmiles}}, \code{\link{check_chemform}}, \code{\link{mergeform}},
 \code{\link{enviPat}}, \code{\link{findMz.formula}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

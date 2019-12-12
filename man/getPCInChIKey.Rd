@@ -25,13 +25,12 @@ may work for other output, but this has not been tested.
 getPCInChIKey("2519")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \references{
 PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
 
 Pubchem REST:
 \url{https://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html}
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

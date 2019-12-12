@@ -35,10 +35,9 @@ splitRrange(test_smiles,"(1-3)")
 splitRrange(test_smiles,"(16-22)")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{RtoSMILES}}, \code{\link{buildSmiles}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

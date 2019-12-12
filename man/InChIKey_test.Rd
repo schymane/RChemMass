@@ -25,10 +25,9 @@ InChIKey_test(CactusKey)
 InChIKey_test("UHOVQNZJYSORNB-UHFFFAOYSA-N")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getSuspectInChIKey}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

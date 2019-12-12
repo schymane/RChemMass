@@ -20,10 +20,9 @@ from SMILES with the rcdk, as recommended. Note: current version does not handle
 MolFormFromSmiles.rcdk("OC(=O)C")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{parse.smiles}}, \code{\link{get.mol2formula}}, \code{\link{MolFormFromInChI}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

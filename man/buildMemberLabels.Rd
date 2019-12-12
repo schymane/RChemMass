@@ -38,10 +38,9 @@ LAS_trim_labels <- buildMemberLabels("LAS",9,5, LAS_smiles_trim, addFormula = TR
 # quote=F, row.names=F, col.names=F)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{buildSmiles}}, \code{\link{buildSeriesLabel}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

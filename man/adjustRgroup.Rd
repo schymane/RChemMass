@@ -56,11 +56,10 @@ test_genSmiles <- adjustRgroup("OC(=O)[R]","[R]",RDB=2,atStart=TRUE, R_range = c
 buildCDKdepictURL(test_genSmiles[1])
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{buildSmiles}}, \code{\link{splitRrange}}, \code{\link{RtoSMILES}},
 To view created SMILES: \code{\link{renderSMILES.CDKdepict}}, \code{\link{renderSMILES.rcdk}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

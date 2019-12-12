@@ -40,11 +40,10 @@ getSuspectIdentifiers(benz_key,allCAS=FALSE,minCAS=TRUE)
 getSuspectIdentifiers(benz_key,allCAS=FALSE,minCAS=FALSE)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getCactus}}, \code{\link{getPcId}}, \code{\link{getCSID}}
 , \code{\link{getCtsRecord}}, \code{\link{getSuspectInChIKey}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

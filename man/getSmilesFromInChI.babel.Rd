@@ -28,10 +28,9 @@ inchi <- "InChI=1S/C2H4O2/c1-2(3)4/h1H3,(H,3,4)"
 getSmilesFromInChI.babel(inchi, "C:/Program Files (x86)/OpenBabel-2.3.2", "C:/DATA")
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{getCactus}}, \code{\link{getSuspectInChIKey.babel}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}

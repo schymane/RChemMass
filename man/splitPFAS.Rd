@@ -52,11 +52,10 @@ splitPFAS(pfas_smiles,splitPFAStools_name,smarts_file = smarts_file)
 splitPFAS(pfas_smiles,splitPFAStools_name,smarts_file = smarts_file,incl_image = TRUE)
 
 }
+\seealso{
+\code{\link{splitPFAS.help}}
+}
 \author{
 Emma Schymanski <emma.schymanski@uni.lu> in partnership with Christoph Ruttkies (MetFragTools)
 and Zhanyun Wang (ETHZ, PFAS examples).
 }
-\seealso{
-\code{\link{splitPFAS.help}}
-}
-

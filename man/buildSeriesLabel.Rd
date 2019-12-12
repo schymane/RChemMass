@@ -38,10 +38,9 @@ buildSeriesLabel(genSmiles,"LAS","{C,C}","{9-13}")
 buildSeriesLabel(genSmiles,"LAS","{C,C}","{9-13}", split_nR1toN=TRUE)
 
 }
-\author{
-Emma Schymanski <emma.schymanski@uni.lu>
-}
 \seealso{
 \code{\link{buildSmiles}}, \code{\link{splitRrange}}.
 }
-
+\author{
+Emma Schymanski <emma.schymanski@uni.lu>
+}
