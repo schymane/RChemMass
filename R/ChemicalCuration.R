@@ -1038,6 +1038,104 @@ getPCID.smiles <- function(query, from = "smiles", to="cids")
 }
 
 
+# https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/22206/xrefs/PatentID,RN,PubMedID/JSON
+
+
+
+#' Retrieve PubMedID and PatentID Counts from PubChem
+#' 
+#' Retrieves PubMedIDs and PatentIDs from PubChem and 
+#' returns a total count of each, using PUG REST.
+#' Default behaviour is to retrieve by CID. 
+#' 
+#' For this function to work as expected, only a unique search query should be
+#' used (e.g. CID). At this stage, only counts of PubMedIDs and Patent Counts 
+#' will be returned. 
+#' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPCxrefs.count(query, from = "cid", xrefs="PatentID,PubMedID")
+#' 
+#' @param query string of the identifier (CID, InChIKey, name) to be converted
+#' @param from Type of input ID (default \code{"cid"}, i.e. PubChem Compound ID, 
+#' alternative \code{"inchikey"} to retrieve via InChIKey, \code{"name"} 
+#' to retrieve via name (caution), \code{"inchi"} to retrieve by InChI, 
+#' or others (untried)).
+#' @param xrefs The type of reference information to retrieve. Default 
+#' \code{"PatentID,PubMedID"}. While any other string terms recognised by 
+#' PUG REST can be used, these are currently ignored. 
+#' @param timeout The timeout, in seconds. For records with many entries, 
+#' this may need to be increased - e.g. if only one \code{NA} is returned. 
+#' @return A list containing the PCID and total counts of patent IDs and PubMed IDs
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' PubChem PUG REST:
+#' \url{https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest}
+#' 
+#' @examples
+#' getPCxrefs.count("22206")
+#' getPCxrefs.count("FZXISNSWEXTPMF-UHFFFAOYSA-N",from="inchikey")
+#' #a non-live record (returns NAs)
+#' getPCxrefs.count("4644")
+#' #a CID with many entries (tests timeout)
+#' getPCxrefs.count("2244")
+#' 
+#' @export
+getPCxrefs.count <- function(query, from = "cid", xrefs="PatentID,PubMedID",timeout=30)
+{
+  baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/"
+  url <- paste0(baseURL, from, "/", query, "/xrefs/", xrefs, "/JSON")
+  #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/22206/xrefs/PatentID,RN,PubMedID/JSON
+  
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    url_data <- getURL(URLencode(url),timeout=timeout),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  # This happens if the PCID is not found:
+  r <- fromJSON(url_data)
+  
+  if(!is.null(r$Fault)) {
+    Counts <- list()
+    Counts[['PCID']] <- NA
+    Counts[['PatentCount']] <- NA
+    Counts[['PubMedRefCount']] <- NA
+    return(Counts)
+  } else {
+    PCID <- r$InformationList$Information[[1]]$CID
+    PatentCount <- length(r$InformationList$Information[[1]]$PatentID)
+    PubMedRefCount <- length(r$InformationList$Information[[1]]$PubMedID)
+    
+    if (is.null(PCID)) {
+      PCID <- NA
+    }
+    if (is.null(PatentCount)) {
+      PatentCount <- NA
+    }
+    if (is.null(PubMedRefCount)) {
+      PubMedRefCount <- NA
+    }
+    
+    Counts <- list()
+    Counts[['PCID']] <- PCID
+    Counts[['PatentCount']] <- PatentCount
+    Counts[['PubMedRefCount']] <- PubMedRefCount
+    return(Counts)
+    
+  }
+}
 
 
 # # Loops that need to be turned into functions:

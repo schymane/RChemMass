@@ -1,3 +1,4 @@
+14.12.19 added getPCxrefs.count, v0.1.21
 13.12.19 added getPCID.smiles, v0.1.20
 17.07.19 fixed documentation URLs, added CITATION, v0.1.19
 21.06.19 fixed bug in trimBuiltSmiles (thanks meowcat), v0.1.18
