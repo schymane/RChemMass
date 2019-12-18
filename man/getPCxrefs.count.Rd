@@ -4,7 +4,8 @@
 \alias{getPCxrefs.count}
 \title{Retrieve PubMedID and PatentID Counts from PubChem}
 \usage{
-getPCxrefs.count(query, from = "cid", xrefs="PatentID,PubMedID")
+getPCxrefs.count(query, from = "cid", xrefs="PatentID,PubMedID",
+timeout=30)
 }
 \arguments{
 \item{query}{string of the identifier (CID, InChIKey, name) to be converted}

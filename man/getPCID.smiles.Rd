@@ -4,13 +4,15 @@
 \alias{getPCID.smiles}
 \title{Retrieve PubChem CIDs from SMILES or InChI}
 \usage{
-getPCID.smiles(query, from = "smiles", to="cids")
+getPCID.smiles(query, from = "smiles", to="cids", timeout=30)
 }
 \arguments{
 \item{query}{SMILES or InChI (or other) to be converted}
 
 \item{from}{Type of input ID (default \code{"smiles"}, i.e. SMILES, alternative
 \code{"inchi"} to retrieve via InChI, or others (untried))}
+
+\item{timeout}{Timeout in seconds for the query}
 }
 \value{
 The matching CID

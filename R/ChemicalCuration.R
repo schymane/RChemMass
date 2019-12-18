@@ -983,11 +983,12 @@ getPCInChIKey <- function(query, from = "cid", to="InChIKey")
 #' may work for other output, but this has not been tested.
 #' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
 #' 
-#' @usage getPCID.smiles(query, from = "smiles", to="cids")
+#' @usage getPCID.smiles(query, from = "smiles", to="cids", timeout=30)
 #' 
 #' @param query SMILES or InChI (or other) to be converted
 #' @param from Type of input ID (default \code{"smiles"}, i.e. SMILES, alternative
 #' \code{"inchi"} to retrieve via InChI, or others (untried))
+#' @param timeout Timeout in seconds for the query
 #' @return The matching CID
 #' 
 #' @author Emma Schymanski <emma.schymanski@@uni.lu>
@@ -1002,10 +1003,11 @@ getPCInChIKey <- function(query, from = "cid", to="InChIKey")
 #' getPCID.smiles("CC(=O)OC1=CC=CC=C1C(=O)O")
 #' 
 #' @export
-getPCID.smiles <- function(query, from = "smiles", to="cids")
+getPCID.smiles <- function(query, from = "smiles", to="cids", timeout=30)
 {
   baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/"
-  url <- paste0(baseURL, from, "/", to, "/JSON?", from, "=", query)
+  url <- paste0(baseURL, from, "/", to, "/JSON?", from, "=", 
+                URLencode(query,reserved=TRUE))
   #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/cids/JSON?smiles=CC(=O)OC1=CC=CC=C1C(=O)O
 
   
@@ -1013,7 +1015,7 @@ getPCID.smiles <- function(query, from = "smiles", to="cids")
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url),timeout=20),
+    url_data <- getURL(URLencode(url,reserved=TRUE),timeout=timeout),
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1053,7 +1055,8 @@ getPCID.smiles <- function(query, from = "smiles", to="cids")
 #' will be returned. 
 #' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
 #' 
-#' @usage getPCxrefs.count(query, from = "cid", xrefs="PatentID,PubMedID")
+#' @usage getPCxrefs.count(query, from = "cid", xrefs="PatentID,PubMedID",
+#' timeout=30)
 #' 
 #' @param query string of the identifier (CID, InChIKey, name) to be converted
 #' @param from Type of input ID (default \code{"cid"}, i.e. PubChem Compound ID, 
@@ -1136,6 +1139,208 @@ getPCxrefs.count <- function(query, from = "cid", xrefs="PatentID,PubMedID",time
     
   }
 }
+
+
+
+#' Retrieve Property Information from PubChem
+#' 
+#' Retrieves property data for MetFrag from PubChem using PUG REST.
+#' Default behaviour is to retrieve by CID or InChIKey. Properties
+#' returned are MolecularFormula, IsomericSMILES, InChI, InChIKey,
+#' IUPACName and MonoisotopicMass
+#' 
+#' For this function to work as expected, only one search entry should be
+#' used (e.g. one CID or InChIKey). The URL can accept comma separated CIDs, 
+#' but this is currently ignored downstream. 
+#' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPCproperty.MF(query, from = "cid", timeout=10)
+#' 
+#' @param query string of the identifier (CID, InChIKey) to be converted
+#' @param from Type of input ID (default \code{"cid"}, i.e. PubChem Compound ID, 
+#' alternative \code{"inchikey"} to retrieve via InChIKey, or others (untried)).
+#' @param timeout The timeout, in seconds.  
+#' @return A list containing the related property information
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' PubChem PUG REST:
+#' \url{https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest}
+#' 
+#' @examples
+#' getPCproperty.MF("22206")
+#' getPCproperty.MF("FZXISNSWEXTPMF-UHFFFAOYSA-N",from="inchikey")
+#' getPCproperty.MF("2244")
+#' #a non-live record 
+#' getPCproperty.MF("4644")
+#' 
+#' @export
+getPCproperty.MF <- function(query, from = "cid", timeout=10)
+{
+  property="MolecularFormula,IsomericSMILES,InChI,InChIKey,IUPACName,MonoisotopicMass"
+  baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/"
+  url <- paste0(baseURL, from, "/", query, "/property/", property, "/JSON")
+  #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/22206/xrefs/PatentID,RN,PubMedID/JSON
+  
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    url_data <- getURL(URLencode(url),timeout=timeout),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  # This happens if the PCID is not found:
+  r <- fromJSON(url_data)
+  
+  if(!is.null(r$Fault)) {
+    Properties <- list()
+    Properties[['PCID']] <- NA
+    Properties[['MolecularFormula']] <- NA
+    Properties[['IsomericSMILES']] <- NA
+    Properties[['InChI']] <- NA
+    Properties[['InChIKey']] <- NA
+    Properties[['IUPACName']] <- NA
+    Properties[['MonoisotopicMass']] <- NA
+    return(Properties)
+  } else {
+    PCID <- r$PropertyTable$Properties[[1]]$CID
+    MolecularFormula <- r$PropertyTable$Properties[[1]]$MolecularFormula
+    IsomericSMILES <- r$PropertyTable$Properties[[1]]$IsomericSMILES
+    InChI <- r$PropertyTable$Properties[[1]]$InChI
+    InChIKey <- r$PropertyTable$Properties[[1]]$InChIKey
+    IUPACName <- r$PropertyTable$Properties[[1]]$IUPACName
+    MonoisotopicMass <- r$PropertyTable$Properties[[1]]$MonoisotopicMass
+    
+    if (is.null(PCID)) {
+      PCID <- NA
+    }
+    if (is.null(MolecularFormula)) {
+      MolecularFormula <- NA
+    }
+    if (is.null(IsomericSMILES)) {
+      IsomericSMILES <- NA
+    }
+    if (is.null(InChI)) {
+      InChI <- NA
+    }
+    if (is.null(InChIKey)) {
+      InChIKey <- NA
+    }
+    if (is.null(IUPACName)) {
+      IUPACName <- NA
+    }
+    if (is.null(MonoisotopicMass)) {
+      MonoisotopicMass <- NA
+    }
+    
+    Properties <- list()
+    Properties[['PCID']] <- PCID
+    Properties[['MolecularFormula']] <- MolecularFormula
+    Properties[['IsomericSMILES']] <- IsomericSMILES
+    Properties[['InChI']] <- InChI
+    Properties[['InChIKey']] <- InChIKey
+    Properties[['IUPACName']] <- IUPACName
+    Properties[['MonoisotopicMass']] <- MonoisotopicMass
+    return(Properties)
+    
+  }
+}
+
+
+#' Retrieve Record Title (Compound Name) from PubChem
+#' 
+#' Retrieves record title (title name) from PubChem using PUG REST.
+#' Default behaviour is to retrieve by CID or InChIKey. 
+#' 
+#' For this function to work as expected, only one search entry should be
+#' used (e.g. one CID or InChIKey). The URL can accept comma separated CIDs, 
+#' but this is currently ignored downstream. 
+#' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPCdesc.title(query, from = "cid", timeout=10)
+#' 
+#' @param query string of the identifier (CID, InChIKey) to be converted
+#' @param from Type of input ID (default \code{"cid"}, i.e. PubChem Compound ID, 
+#' alternative \code{"inchikey"} to retrieve via InChIKey, or others (untried)).
+#' @param timeout The timeout, in seconds.  
+#' @return A list containing the CID and related record title (Name)
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' PubChem PUG REST:
+#' \url{https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest}
+#' 
+#' @examples
+#' getPCdesc.title("22206")
+#' getPCdesc.title("FZXISNSWEXTPMF-UHFFFAOYSA-N",from="inchikey")
+#' getPCdesc.title("2244")
+#' getPCdesc.title("1983")
+#' #a non-live record 
+#' getPCdesc.title("4644")
+#' 
+#' @export
+getPCdesc.title <- function(query, from = "cid", timeout=10)
+{
+  #description="Title"
+  baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/"
+  url <- paste0(baseURL, from, "/", query, "/description/JSON")
+  #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/1983/description/JSON
+  
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    url_data <- getURL(URLencode(url),timeout=timeout),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  # This happens if the PCID is not found:
+  r <- fromJSON(url_data)
+  
+  if(!is.null(r$Fault)) {
+    Desc <- list()
+    Desc[['PCID']] <- NA
+    Desc[['Title']] <- NA
+    return(Desc)
+  } else {
+    PCID <- r$InformationList$Information[[1]]$CID
+    Title <- r$InformationList$Information[[1]]$Title
+
+    if (is.null(PCID)) {
+      PCID <- NA
+    }
+    if (is.null(Title)) {
+      Title <- NA
+    }
+
+    Desc <- list()
+    Desc[['PCID']] <- PCID
+    Desc[['Title']] <- Title
+    return(Desc)
+    
+  }
+}
+
+
 
 
 # # Loops that need to be turned into functions:
