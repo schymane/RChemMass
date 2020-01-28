@@ -1009,13 +1009,13 @@ getPCID.smiles <- function(query, from = "smiles", to="cids", timeout=30)
   url <- paste0(baseURL, from, "/", to, "/JSON?", from, "=", 
                 URLencode(query,reserved=TRUE))
   #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/cids/JSON?smiles=CC(=O)OC1=CC=CC=C1C(=O)O
-
+  
   
   errorvar <- 0
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url,reserved=TRUE),timeout=timeout),
+    url_data <- getURL(url,timeout=timeout),
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1032,7 +1032,7 @@ getPCID.smiles <- function(query, from = "smiles", to="cids", timeout=30)
   
   PCID <- as.character(unlist(r)[1])
   
-  if(is.null(PCID)){
+  if(PCID==0){
     return(NA)
   } else{
     return(PCID)
@@ -1112,9 +1112,9 @@ getPCxrefs.count <- function(query, from = "cid", xrefs="PatentID,PubMedID",time
   
   if(!is.null(r$Fault)) {
     Counts <- list()
-    Counts[['PCID']] <- NA
-    Counts[['PatentCount']] <- NA
-    Counts[['PubMedRefCount']] <- NA
+    Counts[['PCID']] <- as.numeric(query)
+    Counts[['PatentCount']] <- 0
+    Counts[['PubMedRefCount']] <- 0
     return(Counts)
   } else {
     PCID <- r$InformationList$Information[[1]]$CID
