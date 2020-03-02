@@ -8,6 +8,11 @@
 # Install Rtools:
 # https://cran.r-project.org/bin/windows/Rtools/
 # Be careful with the version; check the option "edit system PATH" to enable access.
+# Alternative suggested by Anjana Elapavalore: 
+install.packages("installr")
+library("installr")
+install.Rtools()
+
 # Once Rtools is installed:
 install.packages("devtools")
 # this allows direct installation from e.g. github.
@@ -18,8 +23,16 @@ library(devtools)
 install.packages(c("curl","rsvg","enviPat","rJava", "fingerprint", "png", "rcdk", "rcdklibs"), dependencies=TRUE)
 
 # Ensure you have the latest versions of packages available from BioConductor:
-source("https://bioconductor.org/biocLite.R")
-biocLite(c("MSnbase", "mzR", "RMassBank"))
+# previous Bioc install was via biocLite, now use BiocManager. 
+# source("https://bioconductor.org/biocLite.R")
+# biocLite(c("MSnbase", "mzR", "RMassBank"))
+# for more information see https://bioconductor.org/install/
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install()
+# then install specific packages with
+BiocManager::install(c("MSnbase", "mzR", "RMassBank"))
+
 # if you get errors during installation about missing packages, check whether these 
 # are on CRAN or BioConductor, install these seperately, test with library(package) 
 # then try to install the package that failed.
@@ -35,7 +48,7 @@ library(rJava)
 if (Sys.getenv("JAVA_HOME")!="")
   Sys.setenv(JAVA_HOME="")
 library(rJava)
-# more notes available at: https://github.com/rajarshi/cdkr 
+# more notes available at: https://github.com/CDK-R/cdkr 
 
 # Test progress: 
 library(RMassBank)
@@ -43,13 +56,13 @@ library(RMassBank)
 # RChemMass should work (they share most of the same dependencies).
 
 # Install the remaining dependencies from github directly:
-install_github("rajarshi/cdkr", subdir="rinchi")
+install_github("CDK-R/rinchi")
 # this is useful to create InChIs, can never be part of rcdk as it changes dirs in the background.
 # to get the latest rcdk and rcdklibs 
 # [WARNING - may be incompatible with some functions in current version]
 library(devtools)
-install_github("rajarshi/cdkr", subdir="rcdklibs")
-install_github("rajarshi/cdkr", subdir="rcdk")
+install_github("CDK-R/cdkr", subdir="rcdklibs")
+install_github("CDK-R/cdkr", subdir="rcdk")
 
 # External Resources:
 # Some functions rely on OpenBabel, download here:
