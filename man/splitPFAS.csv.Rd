@@ -21,13 +21,13 @@ splitPFAS.csv(
 \arguments{
 \item{pfas_file}{Name of the CSV file containing at least one SMILES column}
 
-\item{splitPFAStools_name}{Name of the SplitPFAS jar. See \code{\link{SplitPFAS}}}
+\item{splitPFAStools_name}{Name of the SplitPFAS jar. See \code{\link{splitPFAS}}}
 
-\item{smarts_file}{Name of the SMARTS file. See \code{\link{SplitPFAS}}}
+\item{smarts_file}{Name of the SMARTS file. See \code{\link{splitPFAS}}}
 
 \item{babel_dir}{Location of Open Babel dir. Needed for InChIKey checks.}
 
-\item{incl_image}{Whether to include image generation. See \code{\link{SplitPFAS}}}
+\item{incl_image}{Whether to include image generation. See \code{\link{splitPFAS}}}
 
 \item{smiles_col_index}{Index of the column containing SMILES. Default 3.}
 

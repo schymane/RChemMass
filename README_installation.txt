@@ -71,5 +71,5 @@ install_github("CDK-R/cdkr", subdir="rcdk")
 # Functions needing this will ask for the path.
 
 # Then finally, install RChemMass:
-install_github("schymane/RChemMass")
+install_github("schymane/RChemMass", dependencies=FALSE)
 

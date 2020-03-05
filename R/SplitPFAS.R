@@ -230,10 +230,10 @@ splitPFAS <- function(smiles, splitPFAStools_name, incl_image=FALSE, incl_smarts
 #' NOTE: some options only work for very specific files. Use with caution. 
 #'
 #' @param pfas_file Name of the CSV file containing at least one SMILES column
-#' @param splitPFAStools_name Name of the SplitPFAS jar. See \code{\link{SplitPFAS}}
-#' @param smarts_file Name of the SMARTS file. See \code{\link{SplitPFAS}}
+#' @param splitPFAStools_name Name of the SplitPFAS jar. See \code{\link{splitPFAS}}
+#' @param smarts_file Name of the SMARTS file. See \code{\link{splitPFAS}}
 #' @param babel_dir Location of Open Babel dir. Needed for InChIKey checks. 
-#' @param incl_image Whether to include image generation. See \code{\link{SplitPFAS}}
+#' @param incl_image Whether to include image generation. See \code{\link{splitPFAS}}
 #' @param smiles_col_index Index of the column containing SMILES. Default 3. 
 #' @param SMILES_KeyCheck Boolean to indicate if SMILES InChIKey check should be performed.
 #' @param func_group_col_index Index of column containing functional group. For validation only. 
