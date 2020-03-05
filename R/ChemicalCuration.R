@@ -1340,6 +1340,206 @@ getPCdesc.title <- function(query, from = "cid", timeout=10)
   }
 }
 
+#' Retrieve SMILES from Compound Name from PubChem
+#' 
+#' Retrieves the Isomeric SMILES via name (synonyms) from PubChem using PUG REST.
+#' Note that more than one SMILES can be returned and the "best match" is
+#' usually at the top (i.e. n=1). 
+#' 
+#' For this function to work as expected, only one search entry should be
+#' used with the default "name" and "isomericsmiles". n should only be adjusted
+#' if you know what you are doing (i.e. trust n=1 first).
+#' The URL can accept comma separated CIDs, but this is currently 
+#' ignored downstream. 
+#' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPCproperty.IsoSMILES(query, from = "name", to = "isomericsmiles", n=1, timeout=30)
+#' 
+#' @param query string of the compound name for which you need SMILES
+#' @param from Type of input ID (default \code{"name"} should be kept for this 
+#' function to work as expected).
+#' @param to Type of output desired (default \code{"isomericsmiles"} should be 
+#' kept for this function to work as expected).
+#' @param n Default \code{n=1}. For some names, multiple matches will be 
+#' returned and n>1 can be returned by defining n. \code{n=1} is best match.  
+#' @param timeout The timeout, in seconds.  
+#' @return A list containing the CID and the Isomeric SMILES
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' PubChem PUG REST:
+#' \url{https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest}
+#' 
+#' @examples
+#' getPCproperty.IsoSMILES("aspirin")
+#' #an example with multiple results available (up to 3)
+#' getPCproperty.IsoSMILES("carnitine")
+#' getPCproperty.IsoSMILES("carnitine",n=1)
+#' getPCproperty.IsoSMILES("carnitine",n=3)
+#' # a nonsense example
+#' getPCproperty.IsoSMILES("blah")
+#' 
+#' @export
+getPCproperty.IsoSMILES <- function(query, from = "name", to = "isomericsmiles", n=1, timeout=30)
+{
+  #build URL
+  baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/"
+  url <- paste0(baseURL, from, "/", query, "/property/", to, "/JSON")
+  #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/aspirin/property/isomericsmiles/JSON
+  
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    url_data <- getURL(URLencode(url),timeout=timeout),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  r <- fromJSON(url_data)
+  
+  if(!is.null(r$Fault)) {
+    Properties <- list()
+    Properties[['PCID']] <- NA
+    Properties[['IsomericSMILES']] <- NA
+    return(Properties)
+  } else {
+    PCID <- r$PropertyTable$Properties[[n]]$CID
+    IsomericSMILES <- r$PropertyTable$Properties[[n]]$IsomericSMILES
+    
+    if (is.null(PCID)) {
+      PCID <- NA
+    }
+    if (is.null(IsomericSMILES)) {
+      IsomericSMILES <- NA
+    }
+    Properties <- list()
+    Properties[['PCID']] <- PCID
+    Properties[['IsomericSMILES']] <- IsomericSMILES
+    return(Properties)
+    
+  }
+}
+
+
+#' Retrieve various CID types from CID via PubChem
+#' 
+#' Retrieves the various types of related CIDs from a query CID from 
+#' PubChem using PUG REST. See details. 
+#' 
+#' For this function to work as expected, only one search entry should be
+#' used. The URL can accept comma separated CIDs, but this is currently 
+#' ignored downstream. 
+#' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPCIDs.CIDtype(query, type="parent", from = "cid", to = "cids", timeout=30)
+#' 
+#' @param query Input CID (as string) to search
+#' @param from Type of input ID (default \code{"cid"} should be kept for this 
+#' function to work as expected).
+#' @param to Type of output desired (default \code{"cids"} should be 
+#' kept for this function to work as expected).
+#' @param timeout The timeout, in seconds.  
+#' @return A list containing the related CIDs of the desired type
+#' 
+#' @details 
+#' PubChem have a lot of related CIDs, for instance for this record: 
+#' \url{https://pubchem.ncbi.nlm.nih.gov/compound/1234#section=Related-Compounds}.
+#' This function enables you to retrieve CIDs by these different types:
+#' original, parent, component, similar_2d, similar_3d, same_stereo, 
+#' same_isotopes, same_connectivity, same_tautomer, same_parent, 
+#' same_parent _stereo, same_parent _isotopes, same_parent _connectivity, 
+#' same_parent _tautomer (if more options are available but not implemented 
+#' here, this will fail the input tests, pls post an issue).
+#' If you have a mixture, "component" gives you the components of the mixture. 
+#' If you have an individual component, "component" gives you all the mixtures 
+#' containing this component. 
+#' If the CID is a "parent", it is the neutralized form. 
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' PubChem PUG REST:
+#' \url{https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest}
+#' 
+#' @examples
+#' # The original returns the input
+#' getPCIDs.CIDtype("3053",type="original")
+#' # Find the parent CID (neutral version) for a salt
+#' getPCIDs.CIDtype("167781",type="parent")
+#' # If the parent is not available, go to "component" and get the bits
+#' getPCIDs.CIDtype("104265",type="parent")
+#' # [1] NA
+#' getPCIDs.CIDtype("104265",type="component")
+#' # [1] 13360  1004
+#' # For deprecated records, only "original" works
+#' getPCIDs.CIDtype("4644",type="parent")
+#' # [1] NA
+#' getPCIDs.CIDtype("4644",type="original")
+#' # [1] 4644
+#' getPCIDs.CIDtype("4644",type="component")
+#' # [1] NA
+#' 
+#' @export
+getPCIDs.CIDtype <- function(query, type="parent", from = "cid", to = "cids", timeout=30)
+{
+  # test type parameters
+  if(!(type %in% c("original","parent","component", "preferred",
+                   "similar_2d", "similar_3d", 
+                   "same_stereo", "same_isotopes", "same_connectivity", "same_tautomer",
+                   "same_parent", "same_parent_stereo", "same_parent_isotopes", 
+                   "same_parent_connectivity", "same_parent_tautomer"))) {
+    stop("Incorrect type: select one of original, parent, component, preferred, similar_2d, 
+          similar_3d, same_stereo, same_isotopes, same_connectivity, same_tautomer,
+          same_parent, same_parent_stereo, same_parent_isotopes, 
+          same_parent_connectivity, same_parent_tautomer")
+  }
+  #build URL
+  baseURL <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/"
+  url <- paste0(baseURL, from, "/", query, "/", to, "/JSON?cids_type=", type)
+  #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/2735102/cids/JSON?cids_type=component
+  
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    url_data <- getURL(URLencode(url),timeout=timeout),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  # This happens if the PCID is not found:
+  r <- fromJSON(url_data)
+  
+  if(!is.null(r$Fault)) {
+    CIDs <- NA
+    return(CIDs)
+  } else {
+    CIDs <- r$IdentifierList$CID
+    
+    if (is.null(CIDs)) {
+      CIDs <- NA
+    }
+    return(CIDs)
+  }
+}
+
+
 
 
 
