@@ -1540,6 +1540,101 @@ getPCIDs.CIDtype <- function(query, type="parent", from = "cid", to = "cids", ti
 }
 
 
+#' Retrieve CID Count or CID list by Exact Mass from PubChem
+#' 
+#' Retrieves a count of CIDs or CID list from PubChem using entrez/eUtils .
+#' Default behaviour is to retrieve CID count only, or a short CID list 
+#' in ascending order. RMassBank is used to calculate the ppm range. 
+#' Thanks to Paul Thiessen and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPcCand.ExactMass(ExactMass, ppm=5, CountOnly=TRUE, RetMax=20, sortAsc=TRUE, timeout=10)
+#' 
+#' @param ExactMass Exact mass to search
+#' @param ppm Mass error (ppm, not Da) to search. Default \code{5}, adds to both 
+#' sides of ExactMass.
+#' @param CountOnly Default \code{TRUE} returns a count of the CIDs, \code{FALSE}
+#' returns a list of CIDs of length \code{RetMax}.
+#' @param RetMax Number of CIDs to return. Default \code{20} is the eUtils default. 
+#' For large queries this needs to be set much larger; \code{timeout} may need adjusting. 
+#' @param sortAsc Default \code{TRUE} returns CID lists sorted in ascending order 
+#' (lowest CID first), \code{FALSE} reverts to the eUtils default of highest CID first. 
+#' @param timeout The timeout, in seconds.  
+#' @return Either a count of CIDs or a vector of CIDs (\code{NA} if error). 
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem search: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' Entrez eUtils: 
+#' \url{https://www.ncbi.nlm.nih.gov/books/NBK25500/} and 
+#' \url{https://www.ncbi.nlm.nih.gov/books/NBK25499/}
+#' 
+#' @examples
+#' getPcCand.ExactMass(298.095947)
+#' getPcCand.ExactMass(298.095947,5,CountOnly=F)
+#' getPcCand.ExactMass(298.095947,5,CountOnly=F,sortAsc=F)
+#' getPcCand.ExactMass(298.095947,5,CountOnly=F,sortAsc=T,RetMax=10)
+#' # invalid mass entries will return an error in the mass calc
+#' getPcCand.ExactMass("298.095947")
+#' 
+#' @export
+getPcCand.ExactMass <- function(ExactMass, ppm=5, CountOnly=TRUE, RetMax=20, sortAsc=TRUE,timeout=10)
+{
+  #https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pccompound&retmode=json&term=
+  #200.001%3A200.005[ExactMass]&retmax=200
+  ## sort by ascending CID not descending: 
+  #https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pccompound&
+  #format=json&sort=CIDA&term=200.001%3A200.002%5BExactMass%5D
+  mass_limits <- ppm(ExactMass,ppm,l=TRUE)
+  # Test if sort by ascending CID instead of default descending (highest CID first)
+  if (sortAsc) {
+    sort_term <- "&sort=CIDA"
+  } else {
+    sort_term <- ""
+  }
+  baseURL <- "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pccompound&retmode=json"
+  url <- paste0(baseURL, sort_term, "&term=",as.character(mass_limits[2]), "%3A", 
+                as.character(mass_limits[1]), "[ExactMass]&retmax=",RetMax)
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    data <- getURL(URLencode(url),timeout=timeout),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  # This happens if the InChI key is not found:
+  r <- fromJSON(data)
+  
+  if(!is.null(r$esearchresult$warninglist)) {
+    #if(!is.null(r$Fault))
+    return(NA)
+  }
+  
+  # need to build this on esearchresult => warninglist
+  # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pccompound&retmode=json&term=298.094456520265%3Ablah[ExactMass]&retmax=200
+  
+  
+  Count <- r$esearchresult$count
+  Candidates <- r$esearchresult$idlist
+  
+  if(CountOnly){
+    return(Count)
+  } else if (!CountOnly){
+    return(Candidates)
+  } else {
+    return(NA)
+  }
+}
+
+
 
 
 
