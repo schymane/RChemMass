@@ -1,7 +1,7 @@
 Package: RChemMass
 Type: Package
 Title: Various Cheminformatic, Curation and Mass Spectrometry Functions
-Version: 0.1.25
+Version: 0.1.26
 Author: Emma Schymanski
 Authors@R: c(person('Emma', 'Schymanski', role=c('aut','cre'), email='emma.schymanski@uni.lu'),
 			person('Rajarshi', 'Guha', role=c('ctb'), email='rajarshi.guha@gmail.com'),

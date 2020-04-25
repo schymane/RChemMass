@@ -1635,6 +1635,156 @@ getPcCand.ExactMass <- function(ExactMass, ppm=5, CountOnly=TRUE, RetMax=20, sor
 }
 
 
+#' Retrieve Literature Co-associations via PubChem
+#' 
+#' Retrieves the various types of literature co-associations from  
+#' PubChem using display download. NOTE many results are truncated and 
+#' functionality is preliminary. Thanks to Paul Thiessen, Leonid Zaslavsky 
+#' and Evan Bolton from PubChem team for assistance. 
+#' 
+#' @usage getPcCand.coassoc(query, query_type, file_name="", timeout=30, test=FALSE)
+#' 
+#' @param query Input identifier, either a CID, MeSH ID or Gene symbol (as string) to search
+#' @param query_type Type of query. Accepted are currently \code{"ChemicalNeighbor"},
+#'  \code{"ChemicalGeneSymbolNeighbor"}, \code{"ChemicalDiseaseNeighbor"},
+#'  \code{"GeneSymbolChemicalNeighbor"} or \code{"DiseaseChemicalNeighbor"}.
+#' @param file_name File name for the CSV output. If empty, this is auto-created 
+#' based on \code{query_type} and \code{query} and will overwrite existing files
+#' of the same name. 
+#' @param timeout The timeout, in seconds.  
+#' @param test Default \code{TRUE} is fine for all query types except 
+#' \code{"DiseaseChemicalNeighbor"} which should be \code{FALSE}. NOTE
+#' that this comes without any guarantee of continuous functionality
+#' @return A 4-column CSV containing the coassociated identifier, name, article 
+#' count and co-occurrence score. Header varies with query type.
+#' 
+#' @details 
+#' PubChem have a range of literature co-association data that may be useful
+#' for identification purposes, see for example  
+#' \url{https://pubchem.ncbi.nlm.nih.gov/compound/2256#section=Chemical-Co-Occurrences-in-Literature}.
+#' This function enables you to retrieve identifiers, names, article counts and 
+#' the co-occurrence score for several cases, leveraging the current display format. 
+#' NOTE that as the display may change, this function may break without warning; 
+#' in which case please post an issue to 
+#' \url{https://github.com/schymane/RChemMass/issues}.
+#' 
+#' Current cases accepted are: 
+#' ChemicalNeighbor, ChemicalGeneSymbolNeighbor, ChemicalDiseaseNeighbor, 
+#' GeneSymbolChemicalNeighbor and DiseaseChemicalNeighbor.
+#' 
+#' Available but not yet implemented (possible upon request) are 
+#' Gene-Disease, Disease-Gene, Gene-Gene and Disease-Disease co-associations, 
+#' as these do not directly involve chemicals.
+#' 
+#' Functions that work off the full dataset (i.e. are not truncated) are in progress. 
+#' 
+#' @author Emma Schymanski <emma.schymanski@@uni.lu>
+#' 
+#' @references 
+#' PubChem: \url{http://pubchem.ncbi.nlm.nih.gov/} 
+#' 
+#' PubChem Knowledge Panels:
+#' \url{https://pubchemdocs.ncbi.nlm.nih.gov/knowledge-panels}
+#' 
+#' @examples
+#' # Chemical-Chemical co-associations (truncated at 25)
+#' getPcCand.coassoc(query = '2256',query_type = 'ChemicalNeighbor')
+#' # Chemical-Gene co-associations (truncated at 100)
+#' getPcCand.coassoc(query = '2256',query_type = 'ChemicalGeneSymbolNeighbor')
+#' # Chemical-Disease co-associations (truncated at 25)
+#' getPcCand.coassoc(query = '2256',query_type = 'ChemicalDiseaseNeighbor')
+#' # Gene-Chemical co-associations (truncated at 25)
+#' getPcCand.coassoc(query = 'CLN3',query_type = 'GeneSymbolChemicalNeighbor')
+#' Disease-Chemical co-associations (test=TRUE only; may break at any time)
+#' getPcCand.coassoc(query = 'C000657245',query_type = 'DiseaseChemicalNeighbor', 
+#' test=TRUE)
+#' 
+#' @export
+getPcCand.coassoc <- function(query, query_type, file_name="", timeout=30, test=FALSE) {
+  
+  if (test) {
+    baseURL <- 'https://testpubchem.ncbi.nlm.nih.gov/link_db/link_db_server.cgi?format=JSON&type='
+  } else {
+    baseURL <- 'https://pubchem.ncbi.nlm.nih.gov/link_db/link_db_server.cgi?format=JSON&type='
+  }
+  #baseURL <- 'https://testpubchem.ncbi.nlm.nih.gov/link_db/link_db_server.cgi?format=JSON&type='
+  midURL <- '&operation=GetAllLinks&id_1='
+  endURL <- '&response_type=display'
+  url <- paste0(baseURL, query_type, midURL, query, endURL)
+  
+  if (nchar(file_name) < 4) {
+    file_name <- paste0(query_type,"_",query,".csv")
+  }
+  
+  errorvar <- 0
+  currEnvir <- environment()
+  
+  tryCatch(
+    data <- getURL(URLencode(url),timeout=timeout),
+    error=function(e){
+      currEnvir$errorvar <- 1
+    })
+  
+  if(errorvar){
+    return(NA)
+  }
+  
+  r <- fromJSON(data)
+  
+  if(!is.null(r$Fault)) {
+    return(NA)
+  }
+  
+  n_entries <- length(r$LinkDataSet$LinkData)
+  ID_2 <- vector(mode="character",length=n_entries)
+  NeighbourName <- vector(mode="character",length=n_entries)
+  ArticleCount <- vector(mode="character",length=n_entries)
+  CooccurrenceScore <- vector(mode="character",length=n_entries)
+  
+  for (i in 1:length(r$LinkDataSet$LinkData)) {
+    ID_2[i] <- r$LinkDataSet$LinkData[[i]]$ID_2[1]
+    if (query_type == 'DiseaseChemicalNeighbor') {
+      NeighbourName[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$DiseaseChemicalNeighbor$NeighborName
+      ArticleCount[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$DiseaseChemicalNeighbor$ArticleCount
+      # Cooccurrence score
+      CooccurrenceScore[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$DiseaseChemicalNeighbor$CooccurrenceScore
+      colnames_query <- c("PubChem_CID","NeighbourName","ArticleCount","CooccurrenceScore")
+    } else if (query_type == 'ChemicalNeighbor') {
+      NeighbourName[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalNeighbor$NeighborName
+      ArticleCount[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalNeighbor$ArticleCount
+      # Cooccurrence score
+      CooccurrenceScore[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalNeighbor$CooccurrenceScore
+      colnames_query <- c("PubChem_CID","NeighbourName","ArticleCount","CooccurrenceScore")
+    } else if (query_type == 'ChemicalGeneSymbolNeighbor') {
+      NeighbourName[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalGeneSymbolNeighbor$NeighborName
+      ArticleCount[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalGeneSymbolNeighbor$ArticleCount
+      # Cooccurrence score
+      CooccurrenceScore[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalGeneSymbolNeighbor$CooccurrenceScore
+      colnames_query <- c("GeneSymbol","GeneName","ArticleCount","CooccurrenceScore")
+    } else if (query_type == 'ChemicalDiseaseNeighbor') {
+      NeighbourName[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalDiseaseNeighbor$NeighborName
+      ArticleCount[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalDiseaseNeighbor$ArticleCount
+      # Cooccurrence score
+      CooccurrenceScore[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$ChemicalDiseaseNeighbor$CooccurrenceScore
+      colnames_query <- c("MeSH","DiseaseName","ArticleCount","CooccurrenceScore")
+    } else if (query_type == 'GeneSymbolChemicalNeighbor') {
+      NeighbourName[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$GeneSymbolChemicalNeighbor$NeighborName
+      ArticleCount[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$GeneSymbolChemicalNeighbor$ArticleCount
+      # Cooccurrence score
+      CooccurrenceScore[i] <- r$LinkDataSet$LinkData[[i]]$Evidence$GeneSymbolChemicalNeighbor$CooccurrenceScore
+      colnames_query <- c("PubChem_CID","Name","ArticleCount","CooccurrenceScore")
+    } else {
+      print("This query type is not yet supported")
+      return(NA)
+    }
+  }
+  
+  coassoc_info <- as.data.frame(cbind(unlist(ID_2),unlist(NeighbourName),
+                                      unlist(ArticleCount),unlist(CooccurrenceScore)))
+  colnames(coassoc_info) <- colnames_query
+  write.csv(coassoc_info,file_name,row.names=F)
+}
+
 
 
 
