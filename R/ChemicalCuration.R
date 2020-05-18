@@ -1659,11 +1659,11 @@ getPcCand.ExactMass <- function(ExactMass, ppm=5, CountOnly=TRUE, RetMax=20, sor
 #' based on \code{query_type} and \code{query} and will overwrite existing files
 #' of the same name. 
 #' @param timeout The timeout, in seconds.  
-#' @param test Default \code{TRUE} is fine for all query types except 
-#' \code{"DiseaseChemicalNeighbor"} which should be \code{FALSE}. NOTE
+#' @param test Default \code{FALSE} is fine for all query types except 
+#' \code{"DiseaseChemicalNeighbor"} which should be \code{TRUE}. NOTE
 #' that this comes without any guarantee of continuous functionality
-#' @return A 4-column CSV containing the coassociated identifier, name, article 
-#' count and co-occurrence score. Header varies with query type.
+#' @return File name of a 4-column CSV containing the coassociated identifier, 
+#' name, article count and co-occurrence score. Header varies with query type.
 #' 
 #' @details 
 #' PubChem have a range of literature co-association data that may be useful
@@ -1790,6 +1790,7 @@ getPcCand.coassoc <- function(query, query_type, file_name="", timeout=30, test=
                                       unlist(ArticleCount),unlist(CooccurrenceScore)))
   colnames(coassoc_info) <- colnames_query
   write.csv(coassoc_info,file_name,row.names=F)
+  return(file_name)
 }
 
 

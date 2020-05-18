@@ -1,4 +1,4 @@
-18.05.20 fixed check_ded2, v0.1.27
+18.05.20 fixed check_ded2, getPcCand.coassoc, v0.1.27
 25.04.20 added getPcCand.coassoc, v0.1.26
 25.03.20 added getPcCand.ExactMass, v0.1.25
 05.03.20 added getPCIDs.CIDtype, getPCproperty.IsoSMILES, v0.1.24
