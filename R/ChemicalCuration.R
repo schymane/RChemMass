@@ -324,37 +324,44 @@ getSuspectMasses <- function(smiles, adduct_list) {
 #' @examples
 #' check_ded2("C6H6", "H2")
 #' check_ded2("C6H6", "H3O")
+#' check_ded2("C6H6","")
 #'
 check_ded2 <- function(formula, deduct) {
   formula <- formula
   deduct <- deduct
-  formula_list <- formulastring.to.list(formula)
-  deduct_list <- formulastring.to.list(deduct)
-  ded_elements <- names(deduct_list)
-  formula_elements <- names(formula_list)
-  el_in_formula <- vector(length=length(ded_elements))
-  n_element_in_formula <- 0
-  n_element_in_ded <- 0
-  for (i in 1:length(ded_elements)) {
-    element <- ded_elements[i]
-    n_element_in_ded <- deduct_list[i]
-    ind_el <- grep(element,formula_elements)
-    if (length(ind_el)==0) {
-      ind_el <- 0
-      n_element_in_formula <- 0
-    } else {
-      n_element_in_formula <- as.numeric(formula_list[ind_el])
-      if (n_element_in_formula >= n_element_in_ded) {
-        el_in_formula[i] <- TRUE
+  if (nchar(deduct)==0) {
+    ded_OK <- TRUE
+    print("No deduct provided")
+    return(ded_OK)
+  } else {
+    formula_list <- formulastring.to.list(formula)
+    deduct_list <- formulastring.to.list(deduct)
+    ded_elements <- names(deduct_list)
+    formula_elements <- names(formula_list)
+    el_in_formula <- vector(length=length(ded_elements))
+    n_element_in_formula <- 0
+    n_element_in_ded <- 0
+    for (i in 1:length(ded_elements)) {
+      element <- ded_elements[i]
+      n_element_in_ded <- deduct_list[i]
+      ind_el <- grep(element,formula_elements)
+      if (length(ind_el)==0) {
+        ind_el <- 0
+        n_element_in_formula <- 0
+      } else {
+        n_element_in_formula <- as.numeric(formula_list[ind_el])
+        if (n_element_in_formula >= n_element_in_ded) {
+          el_in_formula[i] <- TRUE
+        }
       }
     }
+    # now test if deduct is completely within formula
+    ded_OK <- FALSE
+    if (length(grep("FALSE",el_in_formula,fixed=TRUE))==0) {
+      ded_OK <- TRUE
+    }
+    return(ded_OK)
   }
-  # now test if deduct is completely within formula
-  ded_OK <- FALSE
-  if (length(grep("FALSE",el_in_formula,fixed=TRUE))==0) {
-    ded_OK <- TRUE
-  }
-  return(ded_OK)
 }
 
 #' Retrieve an InChIKey by SMILES or Name with Cactus/CTS
