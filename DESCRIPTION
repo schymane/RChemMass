@@ -18,7 +18,7 @@ Description: RChemMass combines many useful functions for manipulating
 License: Artistic-2.0
 SystemRequirements: OpenBabel, splitPFAS
 Depends: 
-    rcdk,rcdklibs,RMassBank,curl,rsvg,enviPat,rjson,RCurl,httr
+    rcdk,rcdklibs,RMassBank,curl,rsvg,enviPat,rjson,httr
 Suggests: 
     devtools,rinchi,mzR
 Collate:
