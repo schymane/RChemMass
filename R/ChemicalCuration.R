@@ -951,7 +951,10 @@ getPCInChIKey <- function(query, from = "cid", to="InChIKey")
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url),timeout=5),
+    {#url_data <- getURL(URLencode(url),timeout=5),
+      res <- GET(URLencode(url))
+      url_data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1022,7 +1025,11 @@ getPCID.smiles <- function(query, from = "smiles", to="cids", timeout=30)
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(url,timeout=timeout),
+    #url_data <- getURL(url,timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      url_data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1105,7 +1112,11 @@ getPCxrefs.count <- function(query, from = "cid", xrefs="PatentID,PubMedID",time
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url),timeout=timeout),
+    #url_data <- getURL(URLencode(url),timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      url_data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1197,7 +1208,11 @@ getPCproperty.MF <- function(query, from = "cid", timeout=10)
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url),timeout=timeout),
+    #url_data <- getURL(URLencode(url),timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      url_data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1311,7 +1326,11 @@ getPCdesc.title <- function(query, from = "cid", timeout=10)
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url),timeout=timeout),
+    #url_data <- getURL(URLencode(url),timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      url_data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1402,7 +1421,11 @@ getPCproperty.IsoSMILES <- function(query, from = "name", to = "isomericsmiles",
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url),timeout=timeout),
+#    url_data <- getURL(URLencode(url),timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      url_data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1521,7 +1544,11 @@ getPCIDs.CIDtype <- function(query, type="parent", from = "cid", to = "cids", ti
   currEnvir <- environment()
   
   tryCatch(
-    url_data <- getURL(URLencode(url),timeout=timeout),
+    #url_data <- getURL(URLencode(url),timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      url_data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1608,7 +1635,11 @@ getPcCand.ExactMass <- function(ExactMass, ppm=5, CountOnly=TRUE, RetMax=20, sor
   currEnvir <- environment()
   
   tryCatch(
-    data <- getURL(URLencode(url),timeout=timeout),
+    #data <- getURL(URLencode(url),timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })
@@ -1727,7 +1758,11 @@ getPcCand.coassoc <- function(query, query_type, file_name="", timeout=30, test=
   currEnvir <- environment()
   
   tryCatch(
-    data <- getURL(URLencode(url),timeout=timeout),
+    #data <- getURL(URLencode(url),timeout=timeout),
+    {
+      res <- GET(URLencode(url))
+      data <- httr::content(res, type="text", encoding="UTF-8")
+    },
     error=function(e){
       currEnvir$errorvar <- 1
     })

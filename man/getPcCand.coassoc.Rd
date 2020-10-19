@@ -19,13 +19,13 @@ of the same name.}
 
 \item{timeout}{The timeout, in seconds.}
 
-\item{test}{Default \code{TRUE} is fine for all query types except 
-\code{"DiseaseChemicalNeighbor"} which should be \code{FALSE}. NOTE
+\item{test}{Default \code{FALSE} is fine for all query types except 
+\code{"DiseaseChemicalNeighbor"} which should be \code{TRUE}. NOTE
 that this comes without any guarantee of continuous functionality}
 }
 \value{
-A 4-column CSV containing the coassociated identifier, name, article 
-count and co-occurrence score. Header varies with query type.
+File name of a 4-column CSV containing the coassociated identifier, 
+name, article count and co-occurrence score. Header varies with query type.
 }
 \description{
 Retrieves the various types of literature co-associations from  

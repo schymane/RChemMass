@@ -24,6 +24,7 @@ which returns the opposite result.
 \examples{
 check_ded2("C6H6", "H2")
 check_ded2("C6H6", "H3O")
+check_ded2("C6H6","")
 
 }
 \seealso{
