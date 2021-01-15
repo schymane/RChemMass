@@ -178,6 +178,7 @@ getAdductMassesFromFormula <- function(MolForm) {
     MpNH4_mass <- ""
     MpNa_mass <- ""
     MmHm_mass <- ""
+    MpFAm_mass <- ""
     print(paste0("Invalid formula: ", MolForm))
   } else {
     # calculate masses
